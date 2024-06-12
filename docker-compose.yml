@@ -1,0 +1,10 @@
+services:
+  ewm-db:
+    image: postgres:latest
+    container_name: aston-rapid
+    ports:
+      - "6541:5432"
+    environment:
+      - POSTGRES_DB=rapid-ride
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123
