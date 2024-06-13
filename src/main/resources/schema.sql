@@ -11,11 +11,19 @@ DROP TABLE if exists brands cascade;
 DROP TABLE if exists colors cascade;
 DROP TABLE if exists engine_type cascade;
 drop table if exists user_addresses cascade;
-DROP TABLE if exists model cascade;
+DROP TABLE if exists models cascade;
 DROP TABLE if exists rr_account cascade;
+DROP TABLE if exists cards cascade;
+DROP TABLE if exists car_statuses cascade;
+DROP TABLE if exists booking_statuses cascade;
+DROP TABLE if exists document_types cascade;
+DROP TABLE if exists account cascade;
+DROP TABLE if exists engine_types cascade;
+DROP TABLE if exists model cascade;
+
 
 DROP TABLE if exists colors cascade;
-DROP TABLE if exists engine_type cascade;
+
 drop table if exists user_addresses cascade;
 
 
@@ -24,74 +32,86 @@ drop table if exists user_addresses cascade;
 create table user_addresses
 (
     id        serial primary key,
-    zipcode   integer,
-    city      varchar(200),
-    street    varchar(200),
-    house     varchar(100),
-    apartment varchar(100)
+    zipcode   bigint,
+    city      varchar(200) not null,
+    street    varchar(200) not null,
+    house     varchar(100) not null,
+    apartment varchar(100) not null
 );
 
-
-create table cards
+create table car_statuses
 (
-    id          serial primary key,
-    number      bigint  not null,
-    owner       varchar not null,
-    expire_date varchar not null,
-    user_id     int references users (id)
+    id   bigserial primary key,
+    name varchar(20) not null
 );
 
--- Создание таблицы users
+create table booking_statuses
+(
+    id   bigserial primary key,
+    name varchar(20) not null
+);
 CREATE TABLE users
 (
-    id         SERIAL PRIMARY KEY,
+    id         bigserial PRIMARY KEY,
     first_name VARCHAR(50)         NOT NULL,
     last_name  VARCHAR(50)         NOT NULL,
     phone      VARCHAR(20)         NOT NULL,
     email      VARCHAR(100) UNIQUE NOT NULL,
     password   VARCHAR(255)        NOT NULL,
-    address    integer references user_addresses (id),
+    address    bigint references user_addresses (id),
     isActive   bool                not null default true
 );
 
+create table cards
+(
+    id          bigserial primary key,
+    number      bigint  not null,
+    owner       varchar not null,
+    expire_date varchar not null,
+    user_id     bigint references users (id) not null
+);
+
+-- Создание таблицы users
+
+
 create table brands
 (
-    id   serial primary key,
-    name varchar(50)
+    id   bigserial primary key,
+    name varchar(50) not null
 );
 
 create table colors
 (
-    id   serial primary key,
-    name varchar(50)
+    id   bigserial primary key,
+    name varchar(50) not null
 );
 
 
-create table engine_type
+create table engine_types
 (
-    id   serial primary key,
-    name varchar(50)
+    id   bigserial primary key,
+    name varchar(50) not null
 );
 
-create table model
+create table models
 (
-    id   serial primary key,
-    name varchar(50)
+    id   bigserial primary key,
+    name varchar(50) not null
 );
 
 
 CREATE TABLE cars
 (
-    id                  SERIAL PRIMARY KEY,
+    id                  bigserial PRIMARY KEY,
     vin                 VARCHAR(17) NOT NULL unique,
     brand               bigint      NOT NULL references brands (id), --brand
-    model               bigint      NOT NULL references model (id),
-    power               integer     not null,                        -- мощность в Кв
-    engine_type         bigint      not null references engine_type (id),
-    year                INT         NOT NULL,                        --
+    model               bigint      NOT NULL references models (id),
+    power               bigint     not null,                        -- мощность в Кв
+    engine_type         bigint      not null references engine_types (id),
+    year                integer         NOT NULL,                        --
     registration_number VARCHAR(20) NOT NULL,
     color               bigint      not null references colors (id),
-    status              VARCHAR(20) NOT NULL,
+    status              integer     not null references car_statuses (id),
     price               integer     not null,
     photo               VARCHAR
 );
@@ -100,40 +120,45 @@ CREATE TABLE cars
 CREATE TABLE payments
 (
     id                   bigserial PRIMARY KEY,
-    from_sender          int refernces cards(id),
-    payment_summ         DECIMAL,
-    transaction_datetime TIMESTAMP   NOT NULL,
-    to_sender            int references cards (id)
+    from_sender          bigint references cards (id) not null ,
+    to_getter            bigint references cards (id) not null ,
+    payment_summ         decimal not null ,
+    transaction_datetime TIMESTAMP NOT NULL
 );
 
 -- Создание таблицы bookings
 CREATE TABLE bookings
 (
-    id           SERIAL PRIMARY KEY,
-    car_id       INT            NOT NULL,
-    user_id      INT            NOT NULL,
+    id           bigserial PRIMARY KEY,
+    car_id       bigint            NOT NULL,
+    user_id      bigint            NOT NULL,
     start_date   DATE           NOT NULL,
     end_date     DATE           NOT NULL,
     total_amount DECIMAL(10, 2) NOT NULL,
     payment      bigint references payments (id),
-    status       VARCHAR(20)    NOT NULL,
-    price        integer        not null,
+    status       integer        NOT NULL references booking_statuses (id),
+    price        decimal        not null,
     comments     VARCHAR(5000),
     FOREIGN KEY (car_id) REFERENCES cars (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
+);
+create table document_types
+(
+    id   bigserial primary key,
+    name varchar(50) not null
 );
 
 -- Создание таблицы renter_documents
 CREATE TABLE user_documents
 (
-    id              SERIAL PRIMARY KEY,
-    user_id         INT                NOT NULL,
-    first_name      VARCHAR(70)        NOT NULL,
-    last_name       VARCHAR(100)       NOT NULL,
-    document_type   VARCHAR(50)        NOT NULL,
-    document_number VARCHAR(50) UNIQUE NOT NULL,
-    issue           VARCHAR(250)       NOT NULL,
-    expiry_date     DATE               NOT NULL,
+    id              bigserial PRIMARY KEY,
+    user_id         bigint          NOT NULL,
+    first_name      VARCHAR(70)  NOT NULL,
+    last_name       VARCHAR(100) NOT NULL,
+    document_type   integer references document_types (id) not null ,
+    document_number integer not null ,
+    issue           VARCHAR(250) NOT NULL,
+    expiry_date     DATE         NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
@@ -151,12 +176,12 @@ CREATE TABLE users_favorites
 -- Создание таблицы fines
 CREATE TABLE fines
 (
-    id                  SERIAL PRIMARY KEY,
+    id                  bigserial PRIMARY KEY,
     car_id              BIGINT NOT NULL,
     user_id             BIGINT NOT NULL,
-    date                DATE,
-    summ                DECIMAL,
-    registration_number VARCHAR(10),
+    date                DATE not null ,
+    summ                DECIMAL not null ,
+    registration_number VARCHAR(100) not null ,
     payment             bigint references payments (id),
     FOREIGN KEY (car_id) REFERENCES cars (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
@@ -165,15 +190,15 @@ CREATE TABLE fines
 -- Создание таблицы roles
 CREATE TABLE roles
 (
-    id   SERIAL PRIMARY KEY,
+    id   BIGSERIAL PRIMARY KEY,
     name VARCHAR(50) UNIQUE NOT NULL
 );
 
 -- Создание промежуточной таблицы user_roles для связи ManyToMany
 CREATE TABLE users_roles
 (
-    user_id INT NOT NULL,
-    role_id INT NOT NULL,
+    user_id bigint NOT NULL,
+    role_id bigint NOT NULL,
     PRIMARY KEY (user_id, role_id),
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (role_id) REFERENCES roles (id)
