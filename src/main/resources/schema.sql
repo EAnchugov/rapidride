@@ -13,6 +13,7 @@ DROP TABLE if exists engine_type cascade;
 drop table if exists user_addresses cascade;
 DROP TABLE if exists model cascade;
 DROP TABLE if exists rr_account cascade;
+DROP TABLE if exists document_type cascade;
 
 DROP TABLE if exists colors cascade;
 DROP TABLE if exists engine_type cascade;
@@ -40,8 +41,8 @@ CREATE TABLE users
     email      VARCHAR(100) UNIQUE NOT NULL,
     password   VARCHAR(255)        NOT NULL,
     address    integer references user_addresses (id),
-    isActive   bool                not null default true,
-    balance    DECIMAL                      default 0
+    isActive   bool                not null default true
+--     balance    DECIMAL                      default 0
 );
 
 create table brands
@@ -86,11 +87,11 @@ CREATE TABLE cars
     photo               VARCHAR
 );
 
-create table rr_account
-(
-    id      serial,
-    balance bigint
-);
+-- create table rr_account
+-- (
+--     id      serial,
+--     balance bigint
+-- );
 
 -- Создание таблицы payment_documents
 CREATE TABLE payments
@@ -123,6 +124,12 @@ CREATE TABLE bookings
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
+create table document_type
+(
+    id   serial primary key,
+    name varchar(50)
+);
+
 -- Создание таблицы renter_documents
 CREATE TABLE user_documents
 (
@@ -130,12 +137,19 @@ CREATE TABLE user_documents
     user_id         INT                NOT NULL,
     first_name      VARCHAR(70)        NOT NULL,
     last_name       VARCHAR(100)       NOT NULL,
-    document_type   VARCHAR(50)        NOT NULL,
+    document_type   integer            NOT NULL references document_type (id),
     document_number VARCHAR(50) UNIQUE NOT NULL,
     issue           VARCHAR(250)       NOT NULL,
     expiry_date     DATE               NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
+
+-- CREATE TABLE account(
+--     id serial primary key,
+--     email varchar,
+--     password varchar,
+--     balance decimal
+-- );
 
 
 -- Создание таблицы users_favorites
@@ -155,7 +169,7 @@ CREATE TABLE fines
     car_id              BIGINT NOT NULL,
     user_id             BIGINT NOT NULL,
     date                DATE,
-    summ                DECIMAL,
+    fine_summary        DECIMAL,
     registration_number VARCHAR(10),
     payment             bigint references payments (id),
     FOREIGN KEY (car_id) REFERENCES cars (id),
