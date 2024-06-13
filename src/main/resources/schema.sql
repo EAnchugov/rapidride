@@ -30,6 +30,17 @@ create table user_addresses
     house     varchar(100),
     apartment varchar(100)
 );
+
+
+create table cards
+(
+    id          serial primary key,
+    number      bigint  not null,
+    owner       varchar not null,
+    expire_date varchar not null,
+    user_id     int references users (id)
+);
+
 -- Создание таблицы users
 CREATE TABLE users
 (
@@ -40,8 +51,7 @@ CREATE TABLE users
     email      VARCHAR(100) UNIQUE NOT NULL,
     password   VARCHAR(255)        NOT NULL,
     address    integer references user_addresses (id),
-    isActive   bool                not null default true,
-    balance    DECIMAL                      default 0
+    isActive   bool                not null default true
 );
 
 create table brands
@@ -86,24 +96,14 @@ CREATE TABLE cars
     photo               VARCHAR
 );
 
-create table rr_account
-(
-    id      serial,
-    balance bigint
-);
-
 -- Создание таблицы payment_documents
 CREATE TABLE payments
 (
     id                   bigserial PRIMARY KEY,
-    user_id              INT         NOT NULL,
+    from_sender          int refernces cards(id),
     payment_summ         DECIMAL,
-    document_type        VARCHAR(50) NOT NULL,
-    document_number      VARCHAR(50) NOT NULL,
     transaction_datetime TIMESTAMP   NOT NULL,
-
-    send_to              integer,
-    FOREIGN KEY (user_id) REFERENCES users (id)
+    to_sender            int references cards (id)
 );
 
 -- Создание таблицы bookings
