@@ -50,6 +50,7 @@ create table booking_statuses
     id   bigserial primary key,
     name varchar(20) not null
 );
+
 CREATE TABLE users
 (
     id         bigserial PRIMARY KEY,
@@ -58,7 +59,7 @@ CREATE TABLE users
     phone      VARCHAR(20)         NOT NULL,
     email      VARCHAR(100) UNIQUE NOT NULL,
     password   VARCHAR(255)        NOT NULL,
-    address    bigint references user_addresses (id),
+    address_id bigint references user_addresses (id),
     isActive   bool                not null default true
 );
 
@@ -104,14 +105,14 @@ CREATE TABLE cars
 (
     id                  bigserial PRIMARY KEY,
     vin                 VARCHAR(17) NOT NULL unique,
-    brand               bigint      NOT NULL references brands (id), --brand
-    model               bigint      NOT NULL references models (id),
+    brand_id            bigint      NOT NULL references brands (id), --brand
+    model_id            bigint      NOT NULL references models (id),
     power               bigint      not null,                        -- мощность в Кв
-    engine_type         bigint      not null references engine_types (id),
+    engine_type_id      bigint      not null references engine_types (id),
     year                integer     NOT NULL,                        --
     registration_number VARCHAR(20) NOT NULL,
-    color               bigint      not null references colors (id),
-    status              integer     not null references car_statuses (id),
+    color_id            bigint      not null references colors (id),
+    status_id           integer     not null references car_statuses (id),
     price               integer     not null,
     photo               VARCHAR
 );
@@ -135,13 +136,14 @@ CREATE TABLE bookings
     start_date   DATE           NOT NULL,
     end_date     DATE           NOT NULL,
     total_amount DECIMAL(10, 2) NOT NULL,
-    payment      bigint references payments (id),
-    status       integer        NOT NULL references booking_statuses (id),
+    payment_id   bigint references payments (id),
+    status_id    integer        NOT NULL references booking_statuses (id),
     price        decimal        not null,
     comments     VARCHAR(5000),
     FOREIGN KEY (car_id) REFERENCES cars (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
+
 create table document_types
 (
     id   bigserial primary key,
@@ -151,14 +153,14 @@ create table document_types
 -- Создание таблицы renter_documents
 CREATE TABLE user_documents
 (
-    id              bigserial PRIMARY KEY,
-    user_id         bigint                                 NOT NULL,
-    first_name      VARCHAR(70)                            NOT NULL,
-    last_name       VARCHAR(100)                           NOT NULL,
-    document_type   integer references document_types (id) not null,
-    document_number integer                                not null,
-    issue           VARCHAR(250)                           NOT NULL,
-    expiry_date     DATE                                   NOT NULL,
+    id               bigserial PRIMARY KEY,
+    user_id          bigint                                 NOT NULL,
+    first_name       VARCHAR(70)                            NOT NULL,
+    last_name        VARCHAR(100)                           NOT NULL,
+    document_type_id integer references document_types (id) not null,
+    document_number  integer                                not null,
+    issue            VARCHAR(250)                           NOT NULL,
+    expiry_date      DATE                                   NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
@@ -182,7 +184,7 @@ CREATE TABLE fines
     date                DATE         not null,
     summ                DECIMAL      not null,
     registration_number VARCHAR(100) not null,
-    payment             bigint not null references payments (id),
+    payment_id          bigint       not null references payments (id),
     FOREIGN KEY (car_id) REFERENCES cars (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
