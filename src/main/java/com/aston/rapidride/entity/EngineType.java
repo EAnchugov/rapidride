@@ -1,7 +1,10 @@
 package com.aston.rapidride.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
@@ -10,8 +13,8 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "brands")
-public class Brand {
+@Table(name = "engine_types")
+public class EngineType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
