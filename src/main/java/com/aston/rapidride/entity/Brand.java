@@ -3,6 +3,8 @@ package com.aston.rapidride.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+
 @Entity
 @Getter
 @Setter
@@ -16,5 +18,6 @@ public class Brand {
     private Long id;
 
     @Column(name = "name", nullable = false)
+    @NotBlank(message = "name can't be empty")
     private String name;
 }

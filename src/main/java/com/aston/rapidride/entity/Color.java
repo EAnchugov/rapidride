@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
 @Entity
 @Getter
 @Setter
@@ -19,5 +21,6 @@ public class Color {
     private Long id;
 
     @Column(name = "name", nullable = false)
+    @NotBlank(message = "name can't be empty")
     private String name;
 }
