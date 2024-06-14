@@ -2,6 +2,8 @@ package com.aston.rapidride.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -14,15 +16,16 @@ import java.time.LocalDate;
 public class Fine {
     @Id
     Long id;
-    @NonNull
+    @NotBlank
     Long carId;
+    @NotBlank
     Long userId;
-    @NonNull
+    @NotBlank
     LocalDate date;
     @Column(name = "summ")
     BigDecimal sum;
-    @NonNull
+    @NotBlank
     String registration_number;
-    @NonNull
+    @NotBlank
     Long payment_id;
 }
