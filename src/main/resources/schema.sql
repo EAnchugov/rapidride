@@ -1,30 +1,30 @@
-DROP TABLE if exists cars cascade;
-DROP TABLE if exists users cascade;
-DROP TABLE if exists bookings cascade;
-DROP TABLE if exists user_documents cascade;
-DROP TABLE if exists users_favorites cascade;
-DROP TABLE if exists fines cascade;
-DROP TABLE if exists roles cascade;
-DROP TABLE if exists payments cascade;
-DROP TABLE if exists users_roles cascade;
-DROP TABLE if exists brands cascade;
-DROP TABLE if exists colors cascade;
-DROP TABLE if exists engine_type cascade;
-drop table if exists user_addresses cascade;
-DROP TABLE if exists models cascade;
-DROP TABLE if exists rr_account cascade;
-DROP TABLE if exists cards cascade;
-DROP TABLE if exists car_statuses cascade;
-DROP TABLE if exists booking_statuses cascade;
-DROP TABLE if exists document_types cascade;
-DROP TABLE if exists account cascade;
-DROP TABLE if exists engine_types cascade;
-DROP TABLE if exists model cascade;
-
-
-DROP TABLE if exists colors cascade;
-
-drop table if exists user_addresses cascade;
+-- DROP TABLE if exists cars cascade;
+-- DROP TABLE if exists users cascade;
+-- DROP TABLE if exists bookings cascade;
+-- DROP TABLE if exists user_documents cascade;
+-- DROP TABLE if exists users_favorites cascade;
+-- DROP TABLE if exists fines cascade;
+-- DROP TABLE if exists roles cascade;
+-- DROP TABLE if exists payments cascade;
+-- DROP TABLE if exists users_roles cascade;
+-- DROP TABLE if exists brands cascade;
+-- DROP TABLE if exists colors cascade;
+-- DROP TABLE if exists engine_type cascade;
+-- drop table if exists user_addresses cascade;
+-- DROP TABLE if exists models cascade;
+-- DROP TABLE if exists rr_account cascade;
+-- DROP TABLE if exists cards cascade;
+-- DROP TABLE if exists car_statuses cascade;
+-- DROP TABLE if exists booking_statuses cascade;
+-- DROP TABLE if exists document_types cascade;
+-- DROP TABLE if exists account cascade;
+-- DROP TABLE if exists engine_types cascade;
+-- DROP TABLE if exists model cascade;
+--
+--
+-- DROP TABLE if exists colors cascade;
+--
+-- drop table if exists user_addresses cascade;
 
 
 -- Создание таблицы cars
