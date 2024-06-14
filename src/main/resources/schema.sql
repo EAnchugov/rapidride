@@ -182,8 +182,7 @@ CREATE TABLE fines
     date                DATE         not null,
     summ                DECIMAL      not null,
     registration_number VARCHAR(100) not null,
-    payment             bigint references payments (id),
-    status              varchar,
+    payment             bigint not null references payments (id),
     FOREIGN KEY (car_id) REFERENCES cars (id),
     FOREIGN KEY (user_id) REFERENCES users (id)
 );
