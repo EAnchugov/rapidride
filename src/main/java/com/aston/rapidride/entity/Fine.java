@@ -19,19 +19,19 @@ import java.time.LocalDate;
 @Table(name = "fines")
 public class Fine {
     @Id
-    Long id;
+    private Long id;
     //TODO Сделать Car классом после добавления
     @NotBlank
-    Long carId;
+    private Long carId;
     //TODO Сделать User классом после добавления
     @NotBlank
-    Long userId;
+    private Long userId;
     @NotBlank
-    LocalDate date;
+    private LocalDate date;
     @Column(name = "summ")
-    BigDecimal sum;
+    private BigDecimal sum;
     @NotBlank
-    String registration_number;
+    private String registration_number;
     @NotBlank
-    Long payment_id;
+    private Long payment_id;
 }
