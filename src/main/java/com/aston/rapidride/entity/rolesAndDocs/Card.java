@@ -28,7 +28,7 @@ public class Card {
     @NotBlank(message = "owner can't be empty")
     private String owner;
 
-    @Column(name = " expire_date", nullable = false)
+    @Column(name = "expire_date", nullable = false)
     @NotBlank(message = "expire date can't be empty")
     private String expireDate;
 
