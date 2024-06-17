@@ -22,17 +22,17 @@ public class Car {
     @Column(name = "vin")
     private String vin;
 
-    @Column(name = "brand_id")
-    private Long brandId;
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    private Brand brandId;
 
-    @Column(name = "model_id")
-    private Long modelId;
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    private Model modelId;
 
     @Column(name = "power")
     private Long power;
 
-    @Column(name = "engine_type_id")
-    private Long engineTypeId;
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    private EngineType engineTypeId;
 
     @Column(name = "year")
     private int year;
@@ -40,8 +40,8 @@ public class Car {
     @Column(name = "registration_number")
     private String registrationNumber;
 
-    @Column(name = "color_id")
-    private Long colorId;
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    private Color colorId;
 
     @Column(name = "status_id")
     private Integer statusId;
