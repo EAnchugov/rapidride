@@ -1,9 +1,6 @@
 package com.aston.rapidride.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -18,6 +15,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Table(name = "fines")
 public class Fine {
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
     //TODO Сделать Car классом после добавления
@@ -27,11 +26,12 @@ public class Fine {
     @NotBlank
     private Long userId;
     @NotBlank
+    @Column(columnDefinition = "DATE")
     private LocalDate date;
     @Column(name = "summ")
     private BigDecimal sum;
     @NotBlank
-    private String registration_number;
+    private String registrationNumber;
     @NotBlank
-    private Long payment_id;
+    private Long paymentId;
 }
