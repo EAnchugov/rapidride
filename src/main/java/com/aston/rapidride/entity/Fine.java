@@ -18,16 +18,16 @@ public class Fine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
-    //TODO Сделать Car классом после добавления
     @NotBlank
-    private Long carId;
-    //TODO Сделать User классом после добавления
-    @NotBlank
-    private Long userId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_id", referencedColumnName = "id")
+    private Car car;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private  User user;
     @NotBlank
     @Column(columnDefinition = "DATE")
     private LocalDate date;
-
     @Column(name = "summ", columnDefinition = "DECIMAL")
     private BigDecimal sum;
     @NotBlank
