@@ -27,12 +27,13 @@ public class Fine {
     @NotBlank
     @Column(columnDefinition = "DATE")
     private LocalDate date;
-    @Column(name = "summ")
+
+    @Column(name = "summ", columnDefinition = "DECIMAL")
     private BigDecimal sum;
     @NotBlank
     @Column(name = "registration_number")
     private String registrationNumber;
     @NotBlank
-    @Column(name = "payment")
+    @Column(name = "payment_id")
     private Long paymentId;
 }
