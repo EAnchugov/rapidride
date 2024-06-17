@@ -31,7 +31,7 @@ public class Payment {
     private BigDecimal paymentSumm;
 
     @Column(name = "transaction_datetime")
-    private LocalDateTime transactionDatetime;
+    private LocalDateTime transactionDateTime;
 
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<Fine> fines;
