@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Table(name = "fines")
 public class Fine {
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
@@ -31,7 +30,9 @@ public class Fine {
     @Column(name = "summ")
     private BigDecimal sum;
     @NotBlank
+    @Column(name = "registration_number")
     private String registrationNumber;
     @NotBlank
+    @Column(name = "payment")
     private Long paymentId;
 }
