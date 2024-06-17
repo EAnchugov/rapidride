@@ -43,8 +43,8 @@ public class Car {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
     private Color color;
 
-    @Column(name = "status_id")
-    private Integer statusId;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    private CarStatus status;
 
     @Column(name = "price")
     private int price;
