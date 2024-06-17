@@ -46,9 +46,10 @@ public class Booking {
     @NotBlank
     private Long paymentId;
 
-    //TODO Сделать BookingStatus классом после добавления
     @NotBlank
-    private Long statusId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "status_id", referencedColumnName = "id")
+    private BookingStatus status;
 
     @NotBlank
     @Column(columnDefinition = "DECIMAL")
