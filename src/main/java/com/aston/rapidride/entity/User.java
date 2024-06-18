@@ -1,5 +1,7 @@
 package com.aston.rapidride.entity;
 
+import com.aston.rapidride.entity.rolesAndDocs.Role;
+import com.aston.rapidride.entity.rolesAndDocs.UserDocument;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -45,4 +47,9 @@ public class User {
 
     @OneToMany(mappedBy = "id.userId")
     private List<User> userFavorites;
+    @ManyToMany()
+    private List<Role> roles;
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private  List<UserDocument> userDocuments;
 }

@@ -23,10 +23,10 @@ public class Car {
     private String vin;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Brand brandId;
+    private Brand brand;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Model modelId;
+    private Model model;
 
     @Column(name = "power")
     private Long power;
@@ -41,10 +41,10 @@ public class Car {
     private String registrationNumber;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
-    private Color colorId;
+    private Color color;
 
-    @Column(name = "status_id")
-    private Integer statusId;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    private CarStatus status;
 
     @Column(name = "price")
     private int price;
