@@ -1,4 +1,4 @@
-package com.aston.rapidride.entity.DAO;
+package com.aston.rapidride.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,19 +7,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "document_types")
-public class DocumentType {
+@Table(name = "booking_statuses")
+public class BookingStatus {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    @NotBlank(message = "name can't be empty")
+    @NotBlank
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "status")
+    protected Set<Booking> bookings;
 }
