@@ -22,13 +22,15 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //TODO Сделать Car классом после добавления
     @NotBlank
-    private Long carId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id", referencedColumnName = "id")
+    private Car car;
 
-    //TODO Сделать User классом после добавления
     @NotBlank
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @NotBlank
     @Column(name = "start_date", columnDefinition = "DATE")
@@ -42,9 +44,10 @@ public class Booking {
     @Column(name = "total_amount", columnDefinition = "DECIMAL")
     private BigDecimal totalAmount;
 
-    //TODO Сделать Payment классом после добавления
     @NotBlank
-    private Long paymentId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "payment_id", referencedColumnName = "id")
+    private Payment payment;
 
     @NotBlank
     @ManyToOne(fetch = FetchType.LAZY)
