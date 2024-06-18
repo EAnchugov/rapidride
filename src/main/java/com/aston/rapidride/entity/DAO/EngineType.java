@@ -1,4 +1,4 @@
-package com.aston.rapidride.entity;
+package com.aston.rapidride.entity.DAO;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,8 +13,8 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "colors")
-public class Color {
+@Table(name = "engine_types")
+public class EngineType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

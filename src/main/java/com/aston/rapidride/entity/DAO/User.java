@@ -1,4 +1,4 @@
-package com.aston.rapidride.entity;
+package com.aston.rapidride.entity.DAO;
 
 import com.aston.rapidride.entity.rolesAndDocs.Role;
 import com.aston.rapidride.entity.rolesAndDocs.UserDocument;
