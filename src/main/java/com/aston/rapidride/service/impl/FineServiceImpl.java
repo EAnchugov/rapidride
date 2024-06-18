@@ -1,9 +1,10 @@
-package com.aston.rapidride.service;
+package com.aston.rapidride.service.impl;
 
 import com.aston.rapidride.entity.Car;
 import com.aston.rapidride.entity.Fine;
 import com.aston.rapidride.entity.User;
 import com.aston.rapidride.repository.FineRepository;
+import com.aston.rapidride.service.FineService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
