@@ -21,6 +21,8 @@ public class UserDocument {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     //тербуется сам user чтобы домавить отношение
+    @ManyToOne
+    @JoinColumn(name = "id")
     @Column(name = "user_id", nullable = false)
     @NotBlank(message = "user_id can't be empty")
     Long userID;
