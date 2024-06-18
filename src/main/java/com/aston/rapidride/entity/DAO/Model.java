@@ -1,5 +1,4 @@
-package com.aston.rapidride.entity.rolesAndDocs;
-
+package com.aston.rapidride.entity.DAO;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,8 +13,9 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "roles")
-public class Role {
+@Table(name = "models")
+public class Model {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

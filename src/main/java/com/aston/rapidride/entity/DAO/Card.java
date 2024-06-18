@@ -1,6 +1,5 @@
-package com.aston.rapidride.entity.rolesAndDocs;
+package com.aston.rapidride.entity.DAO;
 
-import com.aston.rapidride.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
