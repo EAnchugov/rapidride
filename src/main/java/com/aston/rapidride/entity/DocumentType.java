@@ -1,4 +1,4 @@
-package com.aston.rapidride.entity.DAO;
+package com.aston.rapidride.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,9 +13,8 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "colors")
-public class Color {
-
+@Table(name = "document_types")
+public class DocumentType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
