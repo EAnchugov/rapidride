@@ -5,7 +5,7 @@ import com.aston.rapidride.entity.Fine;
 import com.aston.rapidride.entity.User;
 import com.aston.rapidride.repository.FineRepository;
 import com.aston.rapidride.service.FineService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,58 +13,61 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class FineServiceImpl implements FineService {
+    private final FineRepository repository;
 
-    private FineRepository fineRepository;
+    @Autowired
+    public FineServiceImpl(FineRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Fine getById(Long id) {
-        return null;
+        return repository.findById(id).orElse(null);
     }
 
     @Override
     public void createFine(Fine fine) {
-
+        repository.save(fine);
     }
 
     @Override
     public void updateFine(Fine fine) {
-
+        repository.save(fine);
     }
 
     @Override
     public List<Fine> getAllFine() {
-        return List.of();
+        return repository.findAll();
     }
 
     @Override
     public List<Fine> getAllFineByUser(User user) {
-        return List.of();
+        return repository.findAllByUserId(user.getId());
     }
 
     @Override
     public List<Fine> getAllFineByCar(Car car) {
-        return List.of();
+        return repository.findAllByCarId(car.getId());
     }
 
     @Override
     public Fine getFineByUserAndCar(User user, Car car) {
-        return null;
+        return repository.findAllByCarIdAndUserId(car.getId(), user.getId());
     }
 
     @Override
-    public Fine getFineByRegistrationNumber(Long registrationNumber) {
-        return null;
+    public List<Fine> getFinesByRegistrationNumber(Long registrationNumber) {
+        return repository.findAllByRegistrationNumber(registrationNumber);
     }
 
     @Override
     public List<Fine> getAllFinesBySum(BigDecimal sum) {
-        return List.of();
+        return repository.findAllBySum(sum);
     }
 
     @Override
     public List<Fine> getAllByDate(LocalDate date) {
-        return List.of();
+        return repository.findAllByDate(date);
     }
 }

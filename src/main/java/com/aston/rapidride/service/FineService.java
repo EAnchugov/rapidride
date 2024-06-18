@@ -23,7 +23,7 @@ public interface FineService {
 
     Fine getFineByUserAndCar(User user, Car car);
 
-    Fine getFineByRegistrationNumber(Long registrationNumber);
+    List<Fine> getFinesByRegistrationNumber(Long registrationNumber);
 
     List<Fine> getAllFinesBySum(BigDecimal sum);
 
