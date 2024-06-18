@@ -1,10 +1,6 @@
-package com.aston.rapidride.entity.DAO;
+package com.aston.rapidride.entity;
 
-import com.aston.rapidride.entity.rolesAndDocs.Role;
-import com.aston.rapidride.entity.rolesAndDocs.UserDocument;
 import jakarta.persistence.*;
-import lombok.*;
-
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 
