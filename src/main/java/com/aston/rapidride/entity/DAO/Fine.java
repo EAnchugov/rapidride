@@ -1,4 +1,4 @@
-package com.aston.rapidride.entity;
+package com.aston.rapidride.entity.DAO;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,5 +1,4 @@
-package com.aston.rapidride.entity.rolesAndDocs;
-
+package com.aston.rapidride.entity.DAO;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,20 +6,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "roles")
-public class Role {
+
+@Entity
+@Table(name = "car_statuses")
+public class CarStatus {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    @NotBlank(message = "name can't be empty")
+    @Column(name = "name")
     private String name;
 }

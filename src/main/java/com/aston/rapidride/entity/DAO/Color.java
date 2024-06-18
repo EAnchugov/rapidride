@@ -1,4 +1,4 @@
-package com.aston.rapidride.entity;
+package com.aston.rapidride.entity.DAO;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,19 +6,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
-@Entity
-@Table(name = "car_statuses")
-public class CarStatus {
+@Table(name = "colors")
+public class Color {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
+    @NotBlank(message = "name can't be empty")
     private String name;
 }

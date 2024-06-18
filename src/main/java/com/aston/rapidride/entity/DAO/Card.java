@@ -1,6 +1,5 @@
-package com.aston.rapidride.entity.rolesAndDocs;
+package com.aston.rapidride.entity.DAO;
 
-import com.aston.rapidride.entity.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +27,7 @@ public class Card {
     @NotBlank(message = "owner can't be empty")
     private String owner;
 
-    @Column(name = " expire_date", nullable = false)
+    @Column(name = "expire_date", nullable = false)
     @NotBlank(message = "expire date can't be empty")
     private String expireDate;
 
