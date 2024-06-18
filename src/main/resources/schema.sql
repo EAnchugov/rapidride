@@ -138,7 +138,6 @@ CREATE TABLE bookings
     total_amount DECIMAL(10, 2) NOT NULL,
     payment_id   bigint references payments (id),
     status_id    integer        NOT NULL references booking_statuses (id),
-    price        decimal        not null,
     comments     VARCHAR(5000),
     FOREIGN KEY (car_id) REFERENCES cars (id),
     FOREIGN KEY (user_id) REFERENCES users (id)

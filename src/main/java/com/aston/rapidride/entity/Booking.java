@@ -45,7 +45,7 @@ public class Booking {
     private BigDecimal totalAmount;
 
     @NotBlank
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private Payment payment;
 
@@ -53,10 +53,6 @@ public class Booking {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     private BookingStatus status;
-
-    @NotBlank
-    @Column(columnDefinition = "DECIMAL")
-    private BigDecimal price;
 
     @NotBlank
     private String comments;
