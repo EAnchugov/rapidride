@@ -1,7 +1,5 @@
 package com.aston.rapidride.entity;
 
-import com.aston.rapidride.entity.rolesAndDocs.Role;
-import com.aston.rapidride.entity.rolesAndDocs.UserDocument;
 import jakarta.persistence.*;
 import lombok.*;
 
