@@ -23,7 +23,7 @@ public class FineServiceImpl implements FineService {
 
     @Override
     public Fine getById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow();
     }
 
     @Override
