@@ -6,7 +6,6 @@ import com.aston.rapidride.entity.User;
 import com.aston.rapidride.repository.FineRepository;
 import com.aston.rapidride.service.FineService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -45,7 +44,7 @@ public class FineServiceImpl implements FineService {
 
     @Override
     public List<Fine> getAllFineByCar(Car car) {
-        return repository.findAllByCarId(car.getId());
+        return repository.findAllByCar(car);
     }
 
     @Override
