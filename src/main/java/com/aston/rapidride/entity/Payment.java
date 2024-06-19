@@ -33,10 +33,10 @@ public class Payment {
     @Column(name = "transaction_datetime")
     private LocalDateTime transactionDateTime;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    private List<Fine> fines;
+//    @OneToMany(cascade = CascadeType.REMOVE)
+//    private List<Fine> fines;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    private List<Booking> bookings;
+//    @OneToMany(cascade = CascadeType.REMOVE)
+//    private List<Booking> bookings;
 
 }
