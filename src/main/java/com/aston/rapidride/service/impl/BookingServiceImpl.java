@@ -62,19 +62,4 @@ public class BookingServiceImpl implements BookingService {
     public Booking getBookingByPaymentId(Long id) {
         return null;
     }
-
-    @Override
-    public User getUserByBookingUserId(Long id) {
-        return null;
-    }
-
-    @Override
-    public Car getCarByBookingCarId(Long id) {
-        return null;
-    }
-
-    @Override
-    public Payment getPaymentByBookingCarId(Long id) {
-        return null;
-    }
 }
