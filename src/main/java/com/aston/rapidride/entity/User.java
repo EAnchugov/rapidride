@@ -1,8 +1,6 @@
 package com.aston.rapidride.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
 import java.util.List;
 

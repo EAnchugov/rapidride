@@ -1,10 +1,13 @@
 package com.aston.rapidride.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "user_addresses")
 public class Address {
 
