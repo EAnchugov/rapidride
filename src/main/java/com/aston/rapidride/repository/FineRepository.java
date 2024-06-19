@@ -1,6 +1,8 @@
 package com.aston.rapidride.repository;
 
+import com.aston.rapidride.entity.Car;
 import com.aston.rapidride.entity.Fine;
+import com.aston.rapidride.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,7 +17,8 @@ public interface FineRepository extends JpaRepository<Fine, Long> {
  //   @Query("select f from Fine f where f.carId = :id")
     List<Fine> findAllByCarId(Long id);
 
-//    @Query("select f from Fine f where f.car = :carId and f.userId = :userId")
+    @Query(nativeQuery = true, value = "select * from fines f " +
+            "where f.car_id = :carId and f.user_id = :userId")
     Fine findAllByCarIdAndUserId(Long carId, Long userId);
 
     @Query("select f from Fine f where f.registrationNumber = :number")
