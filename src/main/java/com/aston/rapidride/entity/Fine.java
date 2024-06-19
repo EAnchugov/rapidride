@@ -20,11 +20,11 @@ public class Fine {
     private Long id;
 
     @OneToOne
-    @Column(name = "car_id")
+    @JoinColumn(name = "car_id")
     private Car car;
 
     @OneToOne
-    @Column (name ="user_id" )
+    @JoinColumn (name ="user_id" )
     private User user;
 
     @NotBlank

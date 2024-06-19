@@ -5,6 +5,7 @@ import com.aston.rapidride.entity.Fine;
 import com.aston.rapidride.entity.User;
 import com.aston.rapidride.repository.FineRepository;
 import com.aston.rapidride.service.FineService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +14,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class FineServiceImpl implements FineService {
     private final FineRepository repository;
-
-    @Autowired
-    public FineServiceImpl(FineRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public Fine getById(Long id) {
