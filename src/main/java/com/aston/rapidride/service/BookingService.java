@@ -30,10 +30,4 @@ public interface BookingService {
 
     Booking getBookingByPaymentId(Long id);
 
-    User getUserByBookingUserId(Long id);
-
-    Car getCarByBookingCarId(Long id);
-
-    Payment getPaymentByBookingCarId(Long id);
-
 }
