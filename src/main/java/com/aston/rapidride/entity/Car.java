@@ -1,13 +1,11 @@
 package com.aston.rapidride.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -32,7 +30,7 @@ public class Car {
     private Long power;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
-    private EngineType engineTypeId;
+    private EngineType engineType;
 
     @Column(name = "year")
     private int year;
