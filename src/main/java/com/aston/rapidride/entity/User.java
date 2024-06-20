@@ -1,7 +1,7 @@
 package com.aston.rapidride.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -36,18 +36,19 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "address_id")
     private Address address;
 
 
     @Column(name = "isActive", nullable = false)
     private Boolean isActive;
 
-    @OneToMany(mappedBy = "id.userId")
-    private List<User> userFavorites;
-    @ManyToMany()
-    private List<Role> roles;
     @OneToMany
-    @JoinColumn(name = "user_id")
+    private List<Car> userFavorites;
+
+    @ManyToMany
+    private List<Role> roles;
+
+    @OneToMany
     private  List<UserDocument> userDocuments;
 }
