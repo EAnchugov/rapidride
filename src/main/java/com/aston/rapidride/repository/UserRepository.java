@@ -1,10 +1,11 @@
-package com.aston.rapidride.repository.user;
+package com.aston.rapidride.repository;
 
 import com.aston.rapidride.entity.Address;
+import com.aston.rapidride.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AddressRepository extends JpaRepository<Address, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
     
 }

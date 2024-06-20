@@ -1,13 +1,14 @@
 package com.aston.rapidride.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -23,16 +24,19 @@ public class Car {
     private String vin;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "brand_id")
     private Brand brand;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "model_id")
     private Model model;
 
     @Column(name = "power")
     private Long power;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
-    private EngineType engineTypeId;
+    @JoinColumn(name = "engine_type_id")
+    private EngineType engineType;
 
     @Column(name = "year")
     private int year;
@@ -41,9 +45,11 @@ public class Car {
     private String registrationNumber;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "color_id")
     private Color color;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "car_status_id")
     private CarStatus status;
 
     @Column(name = "price")
@@ -51,4 +57,7 @@ public class Car {
 
     @Column(name = "photo")
     private String photo;
+
+    @OneToMany(mappedBy = "car")
+    private List<Booking> bookings = new ArrayList<>();
 }
