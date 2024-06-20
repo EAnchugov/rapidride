@@ -4,6 +4,7 @@ import com.aston.rapidride.dto.mapper.CarStatusMapper;
 import com.aston.rapidride.dto.request.CarStatusRequest;
 import com.aston.rapidride.dto.response.CarStatusResponse;
 import com.aston.rapidride.entity.CarStatus;
+import com.aston.rapidride.exception.NotFoundException;
 import com.aston.rapidride.repository.CarStatusRepository;
 import com.aston.rapidride.service.CarStatusService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class CarStatusServiceImpl implements CarStatusService {
 
     @Override
     public CarStatusResponse update(Long id, CarStatusRequest carStatusRequest) {
-        CarStatus carStatusDB = carStatusRepository.findById(id).orElseThrow(()-> new RuntimeException("CarStatus with " + id + " not found"));
+        CarStatus carStatusDB = carStatusRepository.findById(id).orElseThrow(()-> new NotFoundException("Car status not found"));
         carStatusDB.setName(carStatusRequest.getName());
         carStatusRepository.save(carStatusDB);
         return mapper.mapToResponse(carStatusDB);
@@ -34,7 +35,7 @@ public class CarStatusServiceImpl implements CarStatusService {
 
     @Override
     public CarStatusResponse findById(Long id) {
-        CarStatus carStatus = carStatusRepository.findById(id).orElseThrow(()-> new RuntimeException("Status with " + id + " not found"));
+        CarStatus carStatus = carStatusRepository.findById(id).orElseThrow(()-> new NotFoundException("Car status not found"));
         return mapper.mapToResponse(carStatus);
     }
 

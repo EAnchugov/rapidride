@@ -4,6 +4,7 @@ import com.aston.rapidride.dto.mapper.CarMapper;
 import com.aston.rapidride.dto.request.CarRequest;
 import com.aston.rapidride.dto.response.CarResponse;
 import com.aston.rapidride.entity.*;
+import com.aston.rapidride.exception.NotFoundException;
 import com.aston.rapidride.repository.*;
 import com.aston.rapidride.service.*;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import static com.aston.rapidride.utility.TextConstants.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,31 +36,27 @@ public class CarServiceImpl implements CarService {
     public void create(CarRequest carRequest) {
         Car car = carMapper.mapToEntity(carRequest);
 
-        Brand brand = brandRepository.findById(carRequest.getBrandId())
-                .orElseThrow(()-> new RuntimeException("Brand with id " + carRequest.getBrandId() + " not found"));
+        Brand brand = brandRepository.findById(carRequest.getBrandId()).orElseThrow(()-> new NotFoundException(BRAND_NOT_FOUND.get()));
         car.setBrand(brand);
 
-        Color color = colorRepository.findById(carRequest.getColorId())
-                .orElseThrow(()-> new RuntimeException("Color with id " + carRequest.getColorId() + " not found"));
+        Color color = colorRepository.findById(carRequest.getColorId()).orElseThrow(()-> new NotFoundException(COLOR_NOT_FOUND.get()));
         car.setColor(color);
 
-        Model model = modelRepository.findById(carRequest.getModelId())
-                .orElseThrow(()-> new RuntimeException("Model with id " + carRequest.getModelId() + " not found"));
+        Model model = modelRepository.findById(carRequest.getModelId()).orElseThrow(()-> new NotFoundException(MODEL_NOT_FOUND.get()));
         car.setModel(model);
 
-        EngineType engineType = engineTypeRepository.findById(carRequest.getEngineTypeId())
-                .orElseThrow(()-> new RuntimeException("EngineType with id " + carRequest.getEngineTypeId() + " not found"));
+        EngineType engineType = engineTypeRepository.findById(carRequest.getEngineTypeId()).orElseThrow(()-> new NotFoundException(ENGINE_TYPE_NOT_FOUND.get()));
         car.setEngineType(engineType);
 
         CarStatus carStatus = carStatusRepository.findById(carRequest.getStatusId())
-                .orElseThrow(()-> new RuntimeException("Status with id " + carRequest.getStatusId() + " not found"));
+                .orElseThrow(()-> new NotFoundException(CAR_STATUS_NOT_FOUND.get()));
         car.setStatus(carStatus);
         carRepository.save(car);
     }
 
     @Override
     public CarResponse update(Long id, CarRequest carRequest) {
-        Car carDB = carRepository.findById(id).orElseThrow(()-> new RuntimeException("Car with id " + id + " not found"));
+        Car carDB = carRepository.findById(id).orElseThrow(()-> new NotFoundException(CAR_NOT_FOUND.get()));
 
         carDB.setVin(carRequest.getVin());
         carDB.setPower(carRequest.getPower());
@@ -67,24 +65,19 @@ public class CarServiceImpl implements CarService {
         carDB.setYear(carRequest.getYear());
         carDB.setPhoto(carRequest.getPhoto());
 
-        Brand brand = brandRepository.findById(carRequest.getBrandId())
-                .orElseThrow(()-> new RuntimeException("Brand with id " + carRequest.getBrandId() + " not found"));
+        Brand brand = brandRepository.findById(carRequest.getBrandId()).orElseThrow(()-> new NotFoundException(BRAND_NOT_FOUND.get()));
         carDB.setBrand(brand);
 
-        Color color = colorRepository.findById(carRequest.getColorId())
-                .orElseThrow(()-> new RuntimeException("Color with id " + carRequest.getColorId() + " not found"));
+        Color color = colorRepository.findById(carRequest.getColorId()).orElseThrow(()-> new NotFoundException(COLOR_NOT_FOUND.get()));
         carDB.setColor(color);
 
-        Model model = modelRepository.findById(carRequest.getModelId())
-                .orElseThrow(()-> new RuntimeException("Model with id " + carRequest.getModelId() + " not found"));
+        Model model = modelRepository.findById(carRequest.getModelId()).orElseThrow(()-> new NotFoundException(MODEL_NOT_FOUND.get()));
         carDB.setModel(model);
 
-        EngineType engineType = engineTypeRepository.findById(carRequest.getEngineTypeId())
-                .orElseThrow(()-> new RuntimeException("EngineType with id " + carRequest.getEngineTypeId() + " not found"));
+        EngineType engineType = engineTypeRepository.findById(carRequest.getEngineTypeId()).orElseThrow(()-> new NotFoundException(ENGINE_TYPE_NOT_FOUND.get()));
         carDB.setEngineType(engineType);
 
-        CarStatus carStatus = carStatusRepository.findById(carRequest.getStatusId())
-                .orElseThrow(()-> new RuntimeException("Status with id " + carRequest.getStatusId() + " not found"));
+        CarStatus carStatus = carStatusRepository.findById(carRequest.getStatusId()).orElseThrow(()-> new NotFoundException(CAR_STATUS_NOT_FOUND.get()));
         carDB.setStatus(carStatus);
         carRepository.save(carDB);
 
@@ -94,7 +87,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public CarResponse findById(Long id) {
         Car car = carRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Car with id " + id + " not found"));
+                .orElseThrow(()-> new NotFoundException(CAR_NOT_FOUND.get()));
         return carMapper.mapToResponse(car);
     }
 
