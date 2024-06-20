@@ -3,6 +3,9 @@ package com.aston.rapidride.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -49,4 +52,7 @@ public class Car {
 
     @Column(name = "photo")
     private String photo;
+
+    @OneToMany(mappedBy = "car")
+    private List<Booking> bookings = new ArrayList<>();
 }
