@@ -1,17 +1,18 @@
 package com.aston.rapidride.service;
 
-import com.aston.rapidride.entity.*;
+import com.aston.rapidride.dto.request.BookingStatusRequest;
+import com.aston.rapidride.dto.response.BookingStatusResponse;
 
 import java.util.List;
 
 public interface BookingStatusService {
 
-    BookingStatus getById(Long id);
+    BookingStatusResponse getById(Long id);
 
-    void createBookingStatus(BookingStatus fine);
+    void createBookingStatus(BookingStatusRequest request);
 
-    void updateBookingStatus(BookingStatus fine);
+    BookingStatusResponse updateBookingStatus(Long id, BookingStatusRequest request);
 
-    List<BookingStatus> getAllBookingStatuses();
+    List<BookingStatusResponse> getAllBookingStatuses();
 
 }
