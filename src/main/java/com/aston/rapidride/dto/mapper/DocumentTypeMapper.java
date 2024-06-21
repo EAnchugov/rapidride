@@ -6,13 +6,14 @@ import com.aston.rapidride.entity.DocumentType;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DocumentTypeMapper {public DocumentTypeResponse mapToResponse(DocumentType documentType) {
-    DocumentTypeResponse response = new DocumentTypeResponse();
-    response.setId(documentType.getId());
-    response.setName(documentType.getName());
-
-    return response;
-}
+public class DocumentTypeMapper {
+    
+    public DocumentTypeResponse mapToResponse(DocumentType documentType) {
+        DocumentTypeResponse response = new DocumentTypeResponse();
+        response.setId(documentType.getId());
+        response.setName(documentType.getName());
+        return response;
+    }
 
     public DocumentType mapRequestToEntity(DocumentTypeRequest request) {
         DocumentType documentType = new DocumentType();
