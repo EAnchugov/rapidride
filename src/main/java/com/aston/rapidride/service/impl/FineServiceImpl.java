@@ -1,8 +1,7 @@
 package com.aston.rapidride.service.impl;
 
-import com.aston.rapidride.entity.Car;
 import com.aston.rapidride.entity.Fine;
-import com.aston.rapidride.entity.User;
+import com.aston.rapidride.exception.NotFoundException;
 import com.aston.rapidride.repository.FineRepository;
 import com.aston.rapidride.service.FineService;
 import jakarta.transaction.Transactional;
@@ -13,6 +12,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.aston.rapidride.utility.TextConstants.FINE_NOT_FOUND;
+
 @Service
 @AllArgsConstructor
 public class FineServiceImpl implements FineService {
@@ -21,7 +22,7 @@ public class FineServiceImpl implements FineService {
     @Override
     @Transactional
     public Fine getById(Long id) {
-        return repository.findById(id).orElse(new Fine());
+        return repository.findById(id).orElseThrow(() -> new NotFoundException(FINE_NOT_FOUND.get()));
     }
 
     @Override
@@ -45,20 +46,20 @@ public class FineServiceImpl implements FineService {
 
     @Override
     @Transactional
-    public List<Fine> getAllFineByUser(User user) {
-        return repository.findAllByUserId(user.getId());
+    public List<Fine> getAllFinesByUserId(Long userId) {
+        return repository.findAllByUserId(userId);
     }
 
     @Override
     @Transactional
-    public List<Fine> getAllFineByCar(Car car) {
-        return repository.findAllByCar(car);
+    public List<Fine> getAllFinesByCarId(Long carId) {
+        return repository.findAllByCarId(carId);
     }
 
     @Override
     @Transactional
-    public Fine getFineByUserAndCar(User user, Car car) {
-        return repository.findAllByCarIdAndUserId(car.getId(), user.getId());
+    public List<Fine> getAllFinesByUserIdAndCarId(Long userId, Long carId) {
+        return repository.findAllByCarIdAndUserId(userId, carId);
     }
 
     @Override

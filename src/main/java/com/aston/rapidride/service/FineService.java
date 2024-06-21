@@ -17,11 +17,11 @@ public interface FineService {
 
     List<Fine> getAllFine();
 
-    List<Fine> getAllFineByUser(User user);
+    List<Fine> getAllFinesByUserId(Long userId);
 
-    List<Fine> getAllFineByCar(Car car);
+    List<Fine> getAllFinesByCarId(Long carId);
 
-    Fine getFineByUserAndCar(User user, Car car);
+    List<Fine> getAllFinesByUserIdAndCarId(Long userId, Long carId);
 
     List<Fine> getFinesByRegistrationNumber(Long registrationNumber);
 
