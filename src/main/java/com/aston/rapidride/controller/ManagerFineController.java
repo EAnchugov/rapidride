@@ -3,12 +3,7 @@ package com.aston.rapidride.controller;
 import com.aston.rapidride.dto.mapper.FineMapper;
 import com.aston.rapidride.dto.request.FineRequest;
 import com.aston.rapidride.dto.response.FineResponse;
-import com.aston.rapidride.entity.Car;
 import com.aston.rapidride.entity.Fine;
-import com.aston.rapidride.entity.User;
-import com.aston.rapidride.exception.NotFoundException;
-import com.aston.rapidride.repository.CarRepository;
-import com.aston.rapidride.repository.UserRepository;
 import com.aston.rapidride.service.FineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,22 +15,17 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.aston.rapidride.utility.TextConstants.CAR_NOT_FOUND;
-import static com.aston.rapidride.utility.TextConstants.USER_NOT_FOUND;
 
 @RestController
 @RequestMapping("/api/v1/manager/fines")
 public class ManagerFineController {
 
     private final FineService fineService;
-    private final CarRepository carRepository;
-    private final UserRepository userRepository;
+
 
     @Autowired
-    public ManagerFineController(FineService fineService, CarRepository carRepository, UserRepository userRepository) {
+    public ManagerFineController(FineService fineService) {
         this.fineService = fineService;
-        this.carRepository = carRepository;
-        this.userRepository = userRepository;
     }
 
     @GetMapping("/{id}")
@@ -47,21 +37,13 @@ public class ManagerFineController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createFine(@RequestBody FineRequest request) {
-        Car car = carRepository.findById(request.getCarId())
-                .orElseThrow(() -> new NotFoundException(CAR_NOT_FOUND.get()));
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.get()));
-        fineService.createFine(FineMapper.toFine(request, user, car));
+        fineService.createFine(request);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public void updateFine(@RequestBody FineRequest request) {
-        Car car = carRepository.findById(request.getCarId())
-                .orElseThrow(() -> new NotFoundException(CAR_NOT_FOUND.get()));
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.get()));
-        fineService.updateFine(FineMapper.toFine(request, user, car));
+        fineService.updateFine(request);
     }
 
     @GetMapping
