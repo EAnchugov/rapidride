@@ -2,7 +2,7 @@ package com.aston.rapidride.service.user;
 
 import com.aston.rapidride.dto.mapper.user.UserMapper;
 import com.aston.rapidride.dto.user.UserDto;
-import com.aston.rapidride.repository.user.UserRepository;
+import com.aston.rapidride.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
