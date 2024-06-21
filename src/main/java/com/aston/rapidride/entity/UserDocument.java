@@ -36,5 +36,6 @@ public class UserDocument {
 
     @ManyToOne
     @JoinColumn(name = "document_type_id")
+    @NotBlank(message = "document_type can't be empty")
     private DocumentType documentType;
 }
