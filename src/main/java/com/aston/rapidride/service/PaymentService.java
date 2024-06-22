@@ -1,5 +1,8 @@
 package com.aston.rapidride.service;
 
+import com.aston.rapidride.dto.request.CardRequest;
+import com.aston.rapidride.dto.request.PaymentRequest;
+import com.aston.rapidride.dto.response.PaymentResponse;
 import com.aston.rapidride.entity.Card;
 import com.aston.rapidride.entity.Payment;
 
@@ -8,23 +11,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PaymentService {
-    Payment getById(Long id);
+    PaymentResponse getById(Long id);
 
-    void createPayment (Payment payment);
+    void createPayment (PaymentRequest paymentRequest);
 
-    void updatePayment (Payment payment);
+    void updatePayment (PaymentRequest paymentRequest);
 
-    List<Payment> getAllPayment ();
+    void deletePayment (Long id);
 
-    List<Payment> getAllPaymentBySumm(BigDecimal sum);
+    List<PaymentResponse> getAllPayment ();
 
-    List<Payment> getAllPaymentByFromCard(Card fromCard);
+    List<PaymentResponse> getAllPaymentBySumm(BigDecimal sum);
 
-    List<Payment> getAllPaymentAfterByTransactionDate(LocalDateTime transactionDate);
+    List<PaymentResponse> getAllPaymentByFromSenderCard(CardRequest cardRequest);
 
-    List<Payment> getAllPaymentBeforeByTransactionDate(LocalDateTime transactionDate);
+    List<PaymentResponse> getAllPaymentByFromGetterCard(CardRequest cardRequest);
 
-    List<Payment> getAllPaymentBetweenByTransactionDate(LocalDateTime transactionDate1, LocalDateTime transactionDate2);
-
-
-}
+    }
