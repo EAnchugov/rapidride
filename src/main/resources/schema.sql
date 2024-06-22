@@ -66,7 +66,7 @@ CREATE TABLE users
 create table cards
 (
     id          bigserial primary key,
-    number      bigint                       not null,
+    number      bigint                       not null unique,
     owner       varchar                      not null,
     expire_date varchar                      not null,
     user_id     bigint references users (id) not null

@@ -2,7 +2,6 @@ package com.aston.rapidride.service;
 
 import com.aston.rapidride.dto.request.CardRequest;
 import com.aston.rapidride.dto.response.CardResponse;
-import com.aston.rapidride.entity.Card;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public interface CardService {
 
     void update(Long id, CardRequest request);
 
-    CardResponse getCardByNumber(Long number);
+    CardResponse getByNumber(Long number);
 
-    CardResponse getCardByOwner(String owner);
+    List<CardResponse> findAllByOwner(String owner);
 }
