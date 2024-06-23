@@ -1,33 +1,31 @@
 package com.aston.rapidride.service;
 
-import com.aston.rapidride.entity.*;
+import com.aston.rapidride.dto.request.BookingRequest;
+import com.aston.rapidride.dto.request.DateRequest;
+import com.aston.rapidride.dto.response.BookingResponse;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 public interface BookingService {
 
-    Booking getById(Long id);
+    BookingResponse getById(Long id);
 
-    void createBooking(Booking fine);
+    void createBooking(BookingRequest request);
 
-    void updateBooking(Booking fine);
+    BookingResponse updateBooking(Long id, BookingRequest request);
 
-    List<Booking> getAllBookings();
+    List<BookingResponse> getAllBookings();
 
-    List<Booking> getBookingsByStatus(BookingStatus status);
+    List<BookingResponse> getBookingsByStatusId(Long statusId);
 
-    List<Booking> getBookingsByUserId(Long userId);
+    List<BookingResponse> getBookingsByUserId(Long userId);
 
-    List<Booking> getBookingsByCarId(Long carId);
+    List<BookingResponse> getBookingsByCarId(Long carId);
 
-    List<Booking> getBookingsByUserIdAndCarId(Long userId, Long carId);
+    List<BookingResponse> getBookingsByUserIdAndCarId(Long userId, Long carId);
 
-    List<Booking> getBookingsByDate(LocalDate startDate, LocalDate endDate);
+    List<BookingResponse> getBookingsByDates(DateRequest request);
 
-    List<Booking> getBookingsByTotalAmount(BigDecimal totalAmount);
-
-    Booking getBookingByPaymentId(Long id);
+    BookingResponse getBookingByPaymentId(Long paymentId);
 
 }
