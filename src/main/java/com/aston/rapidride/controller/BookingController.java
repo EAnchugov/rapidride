@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,13 +29,13 @@ public class BookingController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> create(@RequestBody BookingRequest request) {
+    public ResponseEntity<String> create(@Valid @RequestBody BookingRequest request) {
         bookingService.createBooking(request);
         return new ResponseEntity<>("Successfully", HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookingResponse> update(@PathVariable Long id, @RequestBody BookingRequest request) {
+    public ResponseEntity<BookingResponse> update(@PathVariable Long id, @Valid @RequestBody BookingRequest request) {
         return new ResponseEntity<>(bookingService.updateBooking(id, request), HttpStatus.OK);
     }
 
@@ -85,7 +86,7 @@ public class BookingController {
     }
 
     @GetMapping("/dates")
-    public ResponseEntity<List<BookingResponse>> findAllByDates(@RequestBody DateRequest request) {
+    public ResponseEntity<List<BookingResponse>> findAllByDates(@Valid @RequestBody DateRequest request) {
         List<BookingResponse> bookings = bookingService.getBookingsByDates(request);
         if (bookings == null) {
             return ResponseEntity.notFound().build();
