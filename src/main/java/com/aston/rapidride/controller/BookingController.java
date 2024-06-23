@@ -42,7 +42,7 @@ public class BookingController {
     @GetMapping()
     public ResponseEntity<List<BookingResponse>> findAll() {
         List<BookingResponse> bookings = bookingService.getAllBookings();
-        if (bookings == null) {
+        if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>(bookings, HttpStatus.FOUND);
@@ -51,7 +51,7 @@ public class BookingController {
     @GetMapping("/statuses/{id}")
     public ResponseEntity<List<BookingResponse>> findAllByStatusId(@PathVariable Long id) {
         List<BookingResponse> bookings = bookingService.getBookingsByStatusId(id);
-        if (bookings == null) {
+        if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>(bookings, HttpStatus.FOUND);
@@ -60,7 +60,7 @@ public class BookingController {
     @GetMapping("/users/{id}")
     public ResponseEntity<List<BookingResponse>> findAllByUserId(@PathVariable Long id) {
         List<BookingResponse> bookings = bookingService.getBookingsByUserId(id);
-        if (bookings == null) {
+        if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>(bookings, HttpStatus.FOUND);
@@ -69,7 +69,7 @@ public class BookingController {
     @GetMapping("/cars/{id}")
     public ResponseEntity<List<BookingResponse>> findAllByCarId(@PathVariable Long id) {
         List<BookingResponse> bookings = bookingService.getBookingsByCarId(id);
-        if (bookings == null) {
+        if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>(bookings, HttpStatus.FOUND);
@@ -79,7 +79,7 @@ public class BookingController {
     public ResponseEntity<List<BookingResponse>> findAllByUserAndCarId(@PathVariable Long userId,
                                                                        @PathVariable Long carId) {
         List<BookingResponse> bookings = bookingService.getBookingsByUserIdAndCarId(userId, carId);
-        if (bookings == null) {
+        if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>(bookings, HttpStatus.FOUND);
@@ -88,7 +88,7 @@ public class BookingController {
     @GetMapping("/dates")
     public ResponseEntity<List<BookingResponse>> findAllByDates(@Valid @RequestBody DateRequest request) {
         List<BookingResponse> bookings = bookingService.getBookingsByDates(request);
-        if (bookings == null) {
+        if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return new ResponseEntity<>(bookings, HttpStatus.FOUND);
