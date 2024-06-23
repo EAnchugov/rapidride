@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/car-statuses")
-@RestController
 public class CarStatusController {
 
     private final CarStatusService carStatusService;

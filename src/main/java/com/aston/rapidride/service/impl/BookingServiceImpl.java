@@ -6,10 +6,7 @@ import com.aston.rapidride.dto.request.DateRequest;
 import com.aston.rapidride.dto.response.BookingResponse;
 import com.aston.rapidride.entity.*;
 import com.aston.rapidride.exception.NotFoundException;
-import com.aston.rapidride.repository.BookingRepository;
-import com.aston.rapidride.repository.BookingStatusRepository;
-import com.aston.rapidride.repository.CarRepository;
-import com.aston.rapidride.repository.UserRepository;
+import com.aston.rapidride.repository.*;
 import com.aston.rapidride.service.BookingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,13 +40,13 @@ public class BookingServiceImpl implements BookingService {
     public void createBooking(BookingRequest request) {
         Booking booking = mapper.mapToEntity(request);
 
-        Car car = carRepository.findById(request.getCarId()).orElseThrow(()-> new NotFoundException(CAR_NOT_FOUND.get()));
+        Car car = carRepository.findById(request.getCarId()).orElseThrow(() -> new NotFoundException(CAR_NOT_FOUND.get()));
         booking.setCar(car);
 
-        User user = userRepository.findById(request.getUserId()).orElseThrow(()-> new NotFoundException(USER_NOT_FOUND.get()));
+        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.get()));
         booking.setUser(user);
 
-        Payment payment = paymentRepository.findById(request.getPaymentId()).orElseThrow(()-> new NotFoundException(PAYMENT_NOT_FOUND.get()));
+        Payment payment = paymentRepository.findById(request.getPaymentId()).orElseThrow(() -> new NotFoundException(PAYMENT_NOT_FOUND.get()));
         booking.setPayment(payment);
 
         BookingStatus bookingStatus = bookingStatusRepository.findById(request.getStatusId()).orElseThrow(()
@@ -63,19 +60,19 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingResponse updateBooking(Long id, BookingRequest request) {
-        Booking booking = bookingRepository.findById(id).orElseThrow(()-> new NotFoundException(BOOKING_NOT_FOUND.get()));
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new NotFoundException(BOOKING_NOT_FOUND.get()));
 
         booking.setStartDate(request.getStartDate());
         booking.setEndDate(request.getEndDate());
         booking.setComments(request.getComments());
 
-        Car car = carRepository.findById(request.getCarId()).orElseThrow(()-> new NotFoundException(CAR_NOT_FOUND.get()));
+        Car car = carRepository.findById(request.getCarId()).orElseThrow(() -> new NotFoundException(CAR_NOT_FOUND.get()));
         booking.setCar(car);
 
-        User user = userRepository.findById(request.getUserId()).orElseThrow(()-> new NotFoundException(USER_NOT_FOUND.get()));
+        User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.get()));
         booking.setUser(user);
 
-        Payment payment = paymentRepository.findById(request.getPaymentId()).orElseThrow(()-> new NotFoundException(PAYMENT_NOT_FOUND.get()));
+        Payment payment = paymentRepository.findById(request.getPaymentId()).orElseThrow(() -> new NotFoundException(PAYMENT_NOT_FOUND.get()));
         booking.setPayment(payment);
 
         BookingStatus bookingStatus = bookingStatusRepository.findById(request.getStatusId()).orElseThrow(()
