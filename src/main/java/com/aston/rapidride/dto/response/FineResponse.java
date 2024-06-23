@@ -13,8 +13,7 @@ import java.time.LocalDate;
 public class FineResponse {
     private Long id;
     private CarResponse car;
-
-    //TODO Сделать UserResponce
+    //TODO ждем UserResponse
     private Long userId;
     private LocalDate date;
     private BigDecimal sum;
