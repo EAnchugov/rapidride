@@ -36,11 +36,14 @@ public class FineServiceImpl implements FineService {
     @Override
     @Transactional
     public void createFine(FineRequest request) {
+        Fine fine = FineMapper.toFine(request);
         Car car = carRepository.findById(request.getCarId())
                 .orElseThrow(() -> new NotFoundException(CAR_NOT_FOUND.get()));
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.get()));
-        repository.save(FineMapper.toFine(request, user, car));
+        fine.setCar(car);
+        fine.setUser(user);
+        repository.save(fine);
     }
 
     @Override
@@ -50,7 +53,10 @@ public class FineServiceImpl implements FineService {
                 .orElseThrow(() -> new NotFoundException(CAR_NOT_FOUND.get()));
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND.get()));
-        repository.save(FineMapper.toFine(request, user, car));
+        Fine updating = FineMapper.toFine(request);
+        updating.setCar(car);
+        updating.setUser(user);
+        repository.save(updating);
     }
 
     @Override

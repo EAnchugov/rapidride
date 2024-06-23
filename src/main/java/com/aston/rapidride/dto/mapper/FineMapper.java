@@ -3,23 +3,24 @@ package com.aston.rapidride.dto.mapper;
 import com.aston.rapidride.dto.request.FineRequest;
 import com.aston.rapidride.dto.response.CarResponse;
 import com.aston.rapidride.dto.response.FineResponse;
-import com.aston.rapidride.entity.Car;
 import com.aston.rapidride.entity.Fine;
-import com.aston.rapidride.entity.User;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class FineMapper {
 
-    public static Fine toFine(FineRequest request, User user, Car car) {
+    public static Fine toFine(FineRequest request) {
         return Fine.builder()
                 .id(request.getId())
                 .paymentId(request.getPaymentId())
-                .car(car)
+                //todo
+                // спросить на занятии "Я бы связывание Car and User вынес бы на Service слой,
+                // в текушем состоянии mapper как будто терят универасальность"
+//                .car(car)
                 .date(request.getDate())
                 .sum(request.getSum())
-                .user(user)
+//                .user(user)
                 .registrationNumber(request.getRegistrationNumber())
                 .build();
     }
