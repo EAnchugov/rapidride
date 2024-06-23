@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -36,13 +37,13 @@ public class ManagerFineController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createFine(@RequestBody FineRequest request) {
+    public void createFine(@RequestBody @Valid FineRequest request) {
         fineService.createFine(request);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public void updateFine(@RequestBody FineRequest request) {
+    public void updateFine(@RequestBody @Valid FineRequest request) {
         fineService.updateFine(request);
     }
 
@@ -68,7 +69,8 @@ public class ManagerFineController {
 
     //
     @GetMapping("/user/{userId}/car/{carId}")
-    public ResponseEntity<List<FineResponse>> getFineByUserIdAndCarId(@PathVariable Long userId, @PathVariable Long carId) {
+    public ResponseEntity<List<FineResponse>> getFineByUserIdAndCarId(@PathVariable Long userId,
+                                                                      @PathVariable Long carId) {
         List<Fine> fines = fineService.getAllFinesByUserIdAndCarId(userId, carId);
         return new ResponseEntity<>(fines.stream().map(FineMapper::toFineResponse).toList(), HttpStatus.OK);
     }
