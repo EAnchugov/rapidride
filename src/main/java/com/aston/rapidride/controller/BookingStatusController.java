@@ -24,7 +24,7 @@ public class BookingStatusController {
         if (bookingStatus == null) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(bookingStatus, HttpStatus.FOUND);
+        return new ResponseEntity<>(bookingStatus, HttpStatus.OK);
     }
 
     @PostMapping()

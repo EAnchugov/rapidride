@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -17,10 +18,10 @@ public class BookingResponse {
 
     private Long id;
 
-    @NotBlank
+    @NotNull
     private Car car;
 
-    @NotBlank
+    @NotNull
     private User user;
 
     @NotBlank
@@ -32,10 +33,10 @@ public class BookingResponse {
     @NotBlank
     private BigDecimal totalAmount;
 
-    @NotBlank
+    @NotNull
     private Payment payment;
 
-    @NotBlank
+    @NotNull
     private BookingStatus status;
 
     private String comments;

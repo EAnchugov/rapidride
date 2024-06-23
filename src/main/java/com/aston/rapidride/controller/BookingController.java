@@ -25,7 +25,7 @@ public class BookingController {
         if (booking == null) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(booking, HttpStatus.FOUND);
+        return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 
     @PostMapping()
@@ -45,7 +45,7 @@ public class BookingController {
         if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(bookings, HttpStatus.FOUND);
+        return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/statuses/{id}")
@@ -54,7 +54,7 @@ public class BookingController {
         if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(bookings, HttpStatus.FOUND);
+        return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
@@ -63,7 +63,7 @@ public class BookingController {
         if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(bookings, HttpStatus.FOUND);
+        return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/cars/{id}")
@@ -72,7 +72,7 @@ public class BookingController {
         if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(bookings, HttpStatus.FOUND);
+        return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/users/{userId}/cars/{carId}")
@@ -82,7 +82,7 @@ public class BookingController {
         if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(bookings, HttpStatus.FOUND);
+        return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/dates")
@@ -91,7 +91,7 @@ public class BookingController {
         if (bookings.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(bookings, HttpStatus.FOUND);
+        return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/payments/{id}")
@@ -100,6 +100,6 @@ public class BookingController {
         if (booking == null) {
             return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(booking, HttpStatus.FOUND);
+        return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 }
