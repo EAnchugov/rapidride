@@ -19,6 +19,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.aston.rapidride.utility.TextConstants.PAYMENT_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +29,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 
     private final PaymentRepository paymentRepository;
-    private PaymentMapper paymentMapper;
+    private final PaymentMapper paymentMapper;
     private final CardMapper cardMapper;
 
     @Override
@@ -35,14 +38,13 @@ public class PaymentServiceImpl implements PaymentService {
     };
 
     @Override
-    public void updatePayment (PaymentRequest paymentRequest){
-        Payment payment = paymentRepository.findById(paymentRequest.getId())
-                .orElseThrow(() -> new NotFoundException("Payment not found."));
-        payment.setId(paymentRequest.getId());
+    public void updatePayment (Long id, PaymentRequest paymentRequest){
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(PAYMENT_NOT_FOUND.get()));
         payment.setFromSender(paymentRequest.getFromSender());
-        payment.setFromSender(paymentRequest.getFromSender());
+        payment.setToGetter(paymentRequest.getToGetter());
         payment.setPaymentSumm(paymentRequest.getPaymentSumm());
-        payment.setTransactionDateTime(paymentRequest.getTransactionDateTime());
+        //payment.setTransactionDateTime(paymentRequest.getTransactionDateTime());
         paymentRepository.save(payment);
     };
 
@@ -53,16 +55,16 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentResponse getById(Long id){
-        PaymentResponse paymentResponse = paymentMapper.mapToResponse(paymentRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Payment not found.")));
-        return paymentResponse;
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(PAYMENT_NOT_FOUND.get()));
+        return paymentMapper.mapToResponse(payment);
     };
 
     @Override
     public List<PaymentResponse> getAllPayment (){
         List<Payment> payments = paymentRepository.findAll();
-
-        return payments.stream().map(paymentMapper::mapToResponse).toList();
+        return payments.stream().map(paymentMapper::mapToResponse)
+                .collect(Collectors.toList());
     };
 
     @Override

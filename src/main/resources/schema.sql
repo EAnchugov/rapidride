@@ -124,7 +124,7 @@ CREATE TABLE payments
     from_sender          bigint references cards (id) not null,
     to_getter            bigint references cards (id) not null,
     payment_summ         decimal                      not null,
-    transaction_datetime TIMESTAMP                    NOT NULL
+    transaction_datetime TIMESTAMP                    NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Создание таблицы bookings

@@ -15,7 +15,7 @@ public interface PaymentService {
 
     void createPayment (PaymentRequest paymentRequest);
 
-    void updatePayment (PaymentRequest paymentRequest);
+    void updatePayment (Long id, PaymentRequest paymentRequest);
 
     void deletePayment (Long id);
 

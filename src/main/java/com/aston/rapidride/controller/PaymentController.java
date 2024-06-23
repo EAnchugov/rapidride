@@ -6,8 +6,11 @@ import com.aston.rapidride.dto.response.PaymentResponse;
 import com.aston.rapidride.entity.Payment;
 import com.aston.rapidride.service.PaymentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -19,24 +22,27 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @GetMapping
-    public List<PaymentResponse> getPayments() {
-        return paymentService.getAllPayment();
+    public ResponseEntity<List<PaymentResponse>> getPayments() {
+        return new ResponseEntity<>(paymentService.getAllPayment(), HttpStatus.OK);
     }
     @PostMapping
-    public void createPayment(@RequestBody PaymentRequest paymentRequest) {
+    public ResponseEntity<?> createPayment(@Valid @RequestBody PaymentRequest paymentRequest) {
         paymentService.createPayment(paymentRequest);
+        return new ResponseEntity<>("Successfully", HttpStatus.CREATED);
     }
-    @PutMapping()
-    public void updatePayment(@RequestBody PaymentRequest paymentRequest) {
-        paymentService.updatePayment(paymentRequest);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updatePayment(@PathVariable Long id, @Valid @RequestBody PaymentRequest paymentRequest) {
+        paymentService.updatePayment(id, paymentRequest);
+        return new ResponseEntity<>("Successfully", HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public PaymentResponse getPaymentById(@PathVariable Long id) {
-        return paymentService.getById(id);
+    public ResponseEntity<?> getPaymentById(@PathVariable Long id) {
+        return new ResponseEntity<>(paymentService.getById(id), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
-    public void deletePaymentById(@PathVariable Long id) {
+    public ResponseEntity<?> deletePaymentById(@PathVariable Long id) {
         paymentService.deletePayment(id);
+        return new ResponseEntity<>("Successfully", HttpStatus.OK);
     }
     @GetMapping("/sum")
     public List<PaymentResponse> getPaymentSum(@RequestParam BigDecimal sum) {

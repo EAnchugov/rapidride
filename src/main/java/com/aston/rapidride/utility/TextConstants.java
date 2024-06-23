@@ -14,7 +14,8 @@ public enum TextConstants {
     USER_DOCUMENT_NOT_FOUND("User document not found"),
     DOCUMENT_TYPE_NOT_FOUND("Document type not found"),
     CAR_NOT_FOUND("Car not found"),
-    CAR_STATUS_NOT_FOUND("Car status not found");
+    CAR_STATUS_NOT_FOUND("Car status not found"),
+    PAYMENT_NOT_FOUND("Payment not found");
 
 
     private final String description;
