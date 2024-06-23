@@ -1,8 +1,6 @@
 package com.aston.rapidride.controller;
 
-import com.aston.rapidride.dto.request.CarRequest;
 import com.aston.rapidride.dto.request.CarStatusRequest;
-import com.aston.rapidride.dto.response.CarResponse;
 import com.aston.rapidride.dto.response.CarStatusResponse;
 import com.aston.rapidride.service.CarStatusService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
+@RestController
 @RequestMapping("/api/v1/car-statuses")
 @RestController
 public class CarStatusController {
