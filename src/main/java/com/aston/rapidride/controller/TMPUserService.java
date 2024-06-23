@@ -18,7 +18,9 @@ public class TMPUserService {
     }
 
     public User getUserById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = repository.findById(id).orElse(null);
+ //       return repository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return user;
     }
 
     public List<User> getAllUsers() {

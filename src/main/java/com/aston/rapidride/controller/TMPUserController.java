@@ -4,7 +4,6 @@ import com.aston.rapidride.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import java.util.List;
 
@@ -15,9 +14,7 @@ public class TMPUserController {
     private final TMPUserService service;
 
     @PostMapping
-    public User addUser(
-            @RequestBody @Valid User user
-            ) {
+    public User addUser(@RequestBody User user) {
         return service.create(user);
     }
 
@@ -27,7 +24,7 @@ public class TMPUserController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@RequestParam @Min(1L) Long id) {
+    public User getUser(@PathVariable Long id) {
         return service.getUserById(id);
     }
 
