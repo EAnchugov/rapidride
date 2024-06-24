@@ -3,7 +3,6 @@ package com.aston.rapidride.controller;
 import com.aston.rapidride.dto.request.CardRequest;
 import com.aston.rapidride.dto.request.PaymentRequest;
 import com.aston.rapidride.dto.response.PaymentResponse;
-import com.aston.rapidride.entity.Payment;
 import com.aston.rapidride.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -45,16 +44,16 @@ public class PaymentController {
         return new ResponseEntity<>("Successfully", HttpStatus.OK);
     }
     @GetMapping("/sum")
-    public List<PaymentResponse> getPaymentSum(@RequestParam BigDecimal sum) {
-        return paymentService.getAllPaymentBySumm(sum);
+    public ResponseEntity<List<PaymentResponse>> getPaymentSum(@RequestParam BigDecimal sum) {
+        return new ResponseEntity<>(paymentService.getAllPaymentBySumm(sum), HttpStatus.OK);
     }
     @GetMapping("/sender")
-    public List<PaymentResponse> getPaymentSender(@RequestParam CardRequest cardRequest) {
-        return paymentService.getAllPaymentByFromSenderCard(cardRequest);
+    public ResponseEntity<List<PaymentResponse>> getPaymentSender(@RequestParam CardRequest cardRequest) {
+        return new ResponseEntity<>(paymentService.getAllPaymentByFromSenderCard(cardRequest), HttpStatus.OK);
     }
     @GetMapping("/getter")
-    public List<PaymentResponse> getPaymentGetter(@RequestParam CardRequest cardRequest) {
-        return paymentService.getAllPaymentByFromGetterCard(cardRequest);
+    public ResponseEntity<List<PaymentResponse>> getPaymentGetter(@RequestParam CardRequest cardRequest) {
+        return new ResponseEntity<>(paymentService.getAllPaymentByFromGetterCard(cardRequest), HttpStatus.OK);
     }
 
 
