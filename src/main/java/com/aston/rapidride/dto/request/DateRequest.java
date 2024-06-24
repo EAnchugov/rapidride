@@ -4,11 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Getter
 @Setter
-public class BookingStatusRequest {
+public class DateRequest {
 
     @NotBlank
-    private String name;
+    LocalDate startDate;
+
+    @NotBlank
+    LocalDate endDate;
 }

@@ -54,7 +54,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public CardResponse getCardByNumber(Long number) {
+    public CardResponse getByNumber(Long number) {
         Card card = repository.findCardByNumber(number);
 
         if (card != null) {
@@ -65,11 +65,13 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public CardResponse getCardByOwner(String owner) {
-        Card card = repository.findCardByOwner(owner);
+    public List<CardResponse> findAllByOwner(String owner) {
+        List<Card> cards = repository.findAllByOwner(owner);
 
-        if (card != null) {
-            return mapper.mapToResponse(card);
+        if (!cards.isEmpty()) {
+            return cards.stream()
+                    .map(mapper::mapToResponse)
+                    .toList();
         } else {
             throw new NotFoundException(CARD_NOT_FOUND.get());
         }

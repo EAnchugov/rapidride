@@ -21,7 +21,7 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "number", nullable = false)
+    @Column(name = "number", nullable = false, unique = true)
     private Long number;
 
     @Column(name = "owner", nullable = false)
@@ -34,6 +34,6 @@ public class Card {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @NotNull(message = "user can't be empty")
+//    @NotNull(message = "user can't be empty")
     private User user;
 }
