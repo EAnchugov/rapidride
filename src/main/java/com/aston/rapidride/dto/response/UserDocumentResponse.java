@@ -1,11 +1,11 @@
 package com.aston.rapidride.dto.response;
 
 import com.aston.rapidride.entity.DocumentType;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+
 @Getter
 @Setter
 public class UserDocumentResponse {

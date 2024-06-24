@@ -4,10 +4,8 @@ import com.aston.rapidride.Roles;
 import com.aston.rapidride.dto.mapper.LoginMapper;
 import com.aston.rapidride.dto.mapper.UserMapper;
 import com.aston.rapidride.dto.request.LoginRequest;
-import com.aston.rapidride.dto.request.RegisterRequest;
 import com.aston.rapidride.dto.request.UserRequest;
 import com.aston.rapidride.dto.response.LoginResponse;
-import com.aston.rapidride.dto.response.RegisterResponse;
 import com.aston.rapidride.dto.response.UserResponse;
 import com.aston.rapidride.entity.User;
 import com.aston.rapidride.exception.NotFoundException;
@@ -22,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +40,7 @@ public class AuthService {
 
     public LoginResponse authentication(LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        var user = userRepository.findByEmail(request.getEmail()).orElseThrow(()-> new NotFoundException(TextConstants.USER_NOT_FOUND.get()));
+        var user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new NotFoundException(TextConstants.USER_NOT_FOUND.get()));
         var jwt = jwtService.generateToken(user);
         return LoginMapper.mapToResponse(jwt, user);
     }
