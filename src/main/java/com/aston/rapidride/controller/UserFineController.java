@@ -27,7 +27,7 @@ public class UserFineController {
     }
 
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/{userId}")
     public List<FineResponse> getAllFinesByUserId(@PathVariable Long userId) {
         //TODO получение айдишника из юзера
         //      List<Fine> fines = fineService.getAllFinesByUserId(userId);
@@ -35,7 +35,7 @@ public class UserFineController {
         return fines.stream().map(FineMapper::toFineResponse).collect(Collectors.toList());
     }
 
-    @GetMapping("/user/{userId}/car/{carId}")
+    @GetMapping("/{userId}/car/{carId}")
     public ResponseEntity<List<FineResponse>> getFineByUserIdAndCarId(@PathVariable Long userId,
                                                                       @PathVariable Long carId) {
         //TODO получение айдишника из юзера
