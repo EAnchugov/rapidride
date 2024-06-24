@@ -1,8 +1,7 @@
 package com.aston.rapidride.controller;
 
 import com.aston.rapidride.dto.request.LoginRequest;
-import com.aston.rapidride.dto.request.RegisterRequest;
-import com.aston.rapidride.dto.response.RegisterResponse;
+import com.aston.rapidride.dto.request.UserRequest;
 import com.aston.rapidride.service.impl.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/sing-up")
-    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<?> register(@RequestBody UserRequest request) {
         return new ResponseEntity<>(authService.register(request), HttpStatus.OK);
     }
 

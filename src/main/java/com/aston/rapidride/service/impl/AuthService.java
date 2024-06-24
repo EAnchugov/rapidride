@@ -5,8 +5,10 @@ import com.aston.rapidride.dto.mapper.LoginMapper;
 import com.aston.rapidride.dto.mapper.UserMapper;
 import com.aston.rapidride.dto.request.LoginRequest;
 import com.aston.rapidride.dto.request.RegisterRequest;
+import com.aston.rapidride.dto.request.UserRequest;
 import com.aston.rapidride.dto.response.LoginResponse;
 import com.aston.rapidride.dto.response.RegisterResponse;
+import com.aston.rapidride.dto.response.UserResponse;
 import com.aston.rapidride.entity.User;
 import com.aston.rapidride.exception.NotFoundException;
 import com.aston.rapidride.jwt.JwtService;
@@ -32,8 +34,8 @@ public class AuthService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
-    public RegisterResponse register(RegisterRequest registerRequest) {
-        User user = userMapper.mapToEntity(registerRequest);
+    public UserResponse register(UserRequest userRequest) {
+        User user = userMapper.mapToEntity(userRequest);
         user.setRoles(Roles.USER.name());
         userRepository.save(user);
         return userMapper.mapToResponse(user);

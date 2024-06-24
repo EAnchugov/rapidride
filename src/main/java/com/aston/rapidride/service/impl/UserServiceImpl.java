@@ -21,25 +21,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse getUserById(Long id) {
         return userRepository.findById(id)
-                .map(userMapper::entityToResponse)
+                .map(userMapper::mapToResponse)
                 .orElseThrow(() -> new NotFoundException(TextConstants.USER_NOT_FOUND.get()));
     }
 
     @Override
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(userMapper::entityToResponse)
+                .map(userMapper::mapToResponse)
                 .toList();
     }
 
     @Override
     public void createUser(UserRequest userRequest) {
-        userRepository.save(userMapper.requestToEntity(userRequest));
+        userRepository.save(userMapper.mapToEntity(userRequest));
     }
 
     @Override
     public void updateUser(UserRequest userRequest, Long id) {
-        User user = userMapper.requestToEntity(userRequest);
+        User user = userMapper.mapToEntity(userRequest);
         user.setId(id);
         userRepository.save(user);
     }
