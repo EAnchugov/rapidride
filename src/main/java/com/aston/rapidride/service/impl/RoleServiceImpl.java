@@ -25,7 +25,7 @@ public class RoleServiceImpl implements RoleService {
     public RoleResponse getById(Long id) {
         return repository.findById(id)
                 .map(mapper::mapToResponse)
-                .orElseThrow(() -> new NotFoundException(COLOR_NOT_FOUND.get()));
+                .orElseThrow(() -> new NotFoundException(ROLE_NOT_FOUND.get()));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void update(Long id, RoleRequest request) {
         Role role = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException(COLOR_NOT_FOUND.get()));
+                .orElseThrow(() -> new NotFoundException(ROLE_NOT_FOUND.get()));
         role.setName(request.getName());
         repository.save(role);
     }
