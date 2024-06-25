@@ -1,4 +1,5 @@
 package com.aston.rapidride.controller;
+
 import com.aston.rapidride.dto.request.UserRequest;
 import com.aston.rapidride.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser (@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -1,15 +1,14 @@
 package com.aston.rapidride.dto.response;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @Builder
-public class UserResponse {
+public class RegisterResponse {
+
     private Long id;
     private String firstName;
     private String lastName;

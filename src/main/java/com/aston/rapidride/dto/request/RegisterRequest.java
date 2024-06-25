@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-public class UserRequest {
+public class RegisterRequest {
 
     @NotBlank(message = "First Name должен быть заполнен")
 
@@ -28,4 +28,5 @@ public class UserRequest {
 
     @NotBlank(message = "Phone number должен быть заполнен")
     private String phone;
+
 }
