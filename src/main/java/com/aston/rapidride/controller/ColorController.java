@@ -6,11 +6,10 @@ import com.aston.rapidride.dto.response.ColorResponse;
 import com.aston.rapidride.service.ColorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,21 +19,15 @@ public class ColorController {
     private final ColorService service;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('USER')")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getById(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(service.getById(id));
-        } catch (RuntimeException e) {
-            e.getMessage();
-            return ResponseEntity.notFound().build();
-        }
+    public ColorResponse getById(@PathVariable Long id) {
+        return service.getById(id);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public List<ColorResponse> getAll() {
+        return service.getAll();
     }
 
     @PostMapping

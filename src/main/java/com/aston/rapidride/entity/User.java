@@ -2,98 +2,56 @@ package com.aston.rapidride.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@Data
 @Entity
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
-public class User implements UserDetails {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
+    @NotBlank(message = "name can't be empty")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
+    @NotBlank(message = "name can't be empty")
     private String lastName;
 
-    @Column(name = "phone")
+    @Column(name = "phone", nullable = false)
+    @NotBlank(message = "name can't be empty")
     private String phone;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
+    @NotBlank(message = "name can't be empty")
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
+    @NotBlank(message = "name can't be empty")
     private String password;
-
-    @Column(name = "token")
-    private String token;
-
-    @Column(name = "token_created")
-    private LocalDateTime tokenCreated;
 
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
 
 
-    @Column(name = "is_active")
+    @Column(name = "isActive", nullable = false)
     private Boolean isActive;
 
     @OneToMany
     private List<Car> userFavorites;
 
-    @Column(name = "roles")
-    private String roles;
+    @ManyToMany
+    private List<Role> roles;
 
     @OneToMany
-    private List<UserDocument> userDocuments;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(roles.split(", "))
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+    private  List<UserDocument> userDocuments;
 }

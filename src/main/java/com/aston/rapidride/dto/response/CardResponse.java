@@ -1,7 +1,11 @@
 package com.aston.rapidride.dto.response;
 
 import com.aston.rapidride.entity.User;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;

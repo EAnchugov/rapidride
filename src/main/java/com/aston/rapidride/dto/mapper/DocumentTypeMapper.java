@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DocumentTypeMapper {
-
+    
     public DocumentTypeResponse mapToResponse(DocumentType documentType) {
         DocumentTypeResponse response = new DocumentTypeResponse();
         response.setId(documentType.getId());
