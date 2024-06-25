@@ -24,40 +24,33 @@ public class PaymentController {
     public ResponseEntity<List<PaymentResponse>> getPayments() {
         return new ResponseEntity<>(paymentService.getAllPayment(), HttpStatus.OK);
     }
-
     @PostMapping
     public ResponseEntity<?> createPayment(@Valid @RequestBody PaymentRequest paymentRequest) {
         paymentService.createPayment(paymentRequest);
         return new ResponseEntity<>("Successfully", HttpStatus.CREATED);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePayment(@PathVariable Long id, @Valid @RequestBody PaymentRequest paymentRequest) {
         paymentService.updatePayment(id, paymentRequest);
         return new ResponseEntity<>("Successfully", HttpStatus.OK);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getPaymentById(@PathVariable Long id) {
         return new ResponseEntity<>(paymentService.getById(id), HttpStatus.OK);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePaymentById(@PathVariable Long id) {
         paymentService.deletePayment(id);
         return new ResponseEntity<>("Successfully", HttpStatus.OK);
     }
-
     @GetMapping("/sum")
     public ResponseEntity<List<PaymentResponse>> getPaymentSum(@RequestParam BigDecimal sum) {
         return new ResponseEntity<>(paymentService.getAllPaymentBySumm(sum), HttpStatus.OK);
     }
-
     @GetMapping("/sender")
     public ResponseEntity<List<PaymentResponse>> getPaymentSender(@RequestParam CardRequest cardRequest) {
         return new ResponseEntity<>(paymentService.getAllPaymentByFromSenderCard(cardRequest), HttpStatus.OK);
     }
-
     @GetMapping("/getter")
     public ResponseEntity<List<PaymentResponse>> getPaymentGetter(@RequestParam CardRequest cardRequest) {
         return new ResponseEntity<>(paymentService.getAllPaymentByFromGetterCard(cardRequest), HttpStatus.OK);

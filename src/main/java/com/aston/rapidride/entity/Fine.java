@@ -24,7 +24,7 @@ public class Fine {
     private Car car;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn (name ="user_id" )
     private User user;
 
     @NotBlank

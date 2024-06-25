@@ -13,18 +13,18 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class FineRequest {
-    @Min(value = 1, message = "id должен быть больше 0")
-    private Long id;
-    @Min(value = 1, message = "id должен быть больше 0")
-    private Long carId;
-    @Min(value = 1, message = "id должен быть больше 0")
-    private Long userId;
-    @NotBlank(message = "дата должна быть заполненна")
-    private LocalDate date;
-    @NotBlank(message = "сумма должна быть заполненна")
-    private BigDecimal sum;
-    @NotBlank(message = "Номер регистрации на документ должен быть заполненн")
-    private String registrationNumber;
-    @NotBlank(message = "Ссылка на документ должна быть заполненна")
-    private Long paymentId;
+        @Min(value = 1, message = "id должен быть больше 0")
+        private Long id;
+        @Min(value = 1, message = "id должен быть больше 0")
+        private Long carId;
+        @Min(value = 1, message = "id должен быть больше 0")
+        private Long userId;
+        @NotBlank(message = "дата должна быть заполненна")
+        private LocalDate date;
+        @NotBlank(message = "сумма должна быть заполненна")
+        private BigDecimal sum;
+        @NotBlank(message = "Номер регистрации на документ должен быть заполненн")
+        private String registrationNumber;
+        @NotBlank(message = "Ссылка на документ должна быть заполненна")
+        private Long paymentId;
 }
