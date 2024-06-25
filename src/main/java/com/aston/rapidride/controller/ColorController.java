@@ -34,7 +34,7 @@ public class ColorController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getAll() {
-            return ResponseEntity.ok(service.getAll());
+        return ResponseEntity.ok(service.getAll());
     }
 
     @PostMapping
