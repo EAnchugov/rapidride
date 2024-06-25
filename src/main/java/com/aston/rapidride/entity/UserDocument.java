@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -23,7 +24,7 @@ public class UserDocument {
 
 
     @Column(name = "user_id", nullable = false)
-    @NotBlank(message = "user_id can't be empty")
+    @NotNull(message = "user_id can't be empty")
     Long userID;
 
     @Column(name = "first_name", nullable = false)
@@ -36,6 +37,6 @@ public class UserDocument {
 
     @ManyToOne
     @JoinColumn(name = "document_type_id")
-    @NotBlank(message = "document_type can't be empty")
+    @NotNull(message = "document_type can't be empty")
     private DocumentType documentType;
 }
