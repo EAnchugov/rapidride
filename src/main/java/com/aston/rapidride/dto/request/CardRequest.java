@@ -17,6 +17,5 @@ public class CardRequest {
 
     @NotBlank(message = "expire date can't be empty")
     private String expireDate;
-
     private User user;
 }
