@@ -18,9 +18,9 @@ services:
 
   rapid-ride-db:
     image: postgres:latest
-    container_name: aston-rapid
+    container_name: rapid-ride-db
     ports:
-      - "5432:5432"
+      - "6541:5432"
     environment:
       - POSTGRES_DB=rapid-ride
       - POSTGRES_USER=root
@@ -28,6 +28,7 @@ services:
 
   kafka:
     image: docker.io/bitnami/kafka:3.7
+    container_name: kafka
     ports:
       - "9092:9092"
     volumes:
@@ -39,21 +40,22 @@ services:
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
       # Listeners
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
 
   minio:
     image: docker.io/bitnami/minio:2024
+    container_name: minio
     ports:
       - '9000:9000'
       - '9001:9001'
     volumes:
       - 'minio_data:/bitnami/minio/data'
     environment:
-      - MINIO_ROOT_USER=minioadmin
-      - MINIO_ROOT_PASSWORD=minioadmin
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
 
 volumes:
   kafka_data:
