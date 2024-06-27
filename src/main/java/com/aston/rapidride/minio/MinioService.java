@@ -22,6 +22,12 @@ public class MinioService {
 
     //TODO Сделать превязку Car, ФОтографии и пути до этой фотографии.
     public void addFile(String objectName, String filePath) {
+        //Получаем ссылки на картинки
+        //Проверяем на уникальность имени
+        //Если уникально - создаем
+        //если нет - генерируем рандомное имя
+
+        //Если создали - атдейтим саr уникальным именем файла
         try {
             MinioClient minioClient = MinioClient.builder()
                     .endpoint(minio)
