@@ -7,6 +7,8 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 /**
+ * DTO для отображения курса валюты
+ *
  * @author Azimov Ruslan
  */
 @Getter

@@ -11,11 +11,12 @@ import java.io.InputStream;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("api/v1/files")
 public class MinioController {
 
     private MinioService minioService;
 
-    @GetMapping("/files/{objectName}")
+    @GetMapping("/{objectName}")
     public ResponseEntity<byte[]> getFile(@PathVariable String objectName) {
         System.out.println("Getting file " + objectName);
         try {
@@ -32,14 +33,14 @@ public class MinioController {
         }
     }
 
-    @PostMapping("/files")
+    @PostMapping
     public ResponseEntity<String> uploadFile(@RequestParam String objectName,
                                              @RequestParam String filePath) {
         minioService.addFile(objectName, filePath);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
-    @GetMapping("/files/names/{objectName}")
+    @GetMapping("/names/{objectName}")
     public String getFileUrl(@PathVariable String objectName) {
         try {
             return minioService.getPresignedObjectUrl(objectName);

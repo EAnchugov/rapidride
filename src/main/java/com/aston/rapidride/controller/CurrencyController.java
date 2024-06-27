@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * Контроллер для получения актуального курса
+ * валют нац банка РБ
+ *
  * @author Azimov Ruslan
  */
 @RequiredArgsConstructor

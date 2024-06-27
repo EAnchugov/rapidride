@@ -18,6 +18,11 @@ public class CurrencyService {
         this.restTemplate = restTemplateBuilder.build();
     }
 
+    /**
+     * Полутчение всех валют относительно BYN
+     *
+     * @return Массив с полученными валютами
+     */
     public CurrencyDto[] getAllCurrencies() {
         String url = "https://api.nbrb.by/exrates/rates?periodicity=0";
         return this.restTemplate.getForObject(url, CurrencyDto[].class);
