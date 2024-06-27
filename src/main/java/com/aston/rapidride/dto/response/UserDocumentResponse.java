@@ -1,11 +1,11 @@
 package com.aston.rapidride.dto.response;
 
 import com.aston.rapidride.entity.DocumentType;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+
 @Getter
 @Setter
 public class UserDocumentResponse {
@@ -14,7 +14,6 @@ public class UserDocumentResponse {
 
     @NotBlank(message = "user_id can't be empty")
     Long userID;
-
 
     @NotBlank(message = "first_name can't be empty")
     private String firstName;

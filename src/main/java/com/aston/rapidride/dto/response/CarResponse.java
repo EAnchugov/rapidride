@@ -24,7 +24,6 @@ public class CarResponse {
 
     private String photo;
 
-
     private String engineTypeId;
 
     private String statusId;

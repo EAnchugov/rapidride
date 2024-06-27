@@ -2,11 +2,16 @@ package com.aston.rapidride.entity;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -21,16 +26,23 @@ public class Payment {
 
     @ManyToOne()
     @JoinColumn(name = "from_sender")
+    @NotNull
     private Card fromSender;
 
     @ManyToOne()
     @JoinColumn(name = "to_getter")
+    @NotNull
     private Card toGetter;
 
     @Column(name = "payment_summ")
+    @NotBlank
     private BigDecimal paymentSumm;
 
     @Column(name = "transaction_datetime")
-    private LocalDateTime transactionDateTime;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @NotBlank
+    private LocalDateTime transactionDateTime = LocalDateTime.now();
+
 
 }

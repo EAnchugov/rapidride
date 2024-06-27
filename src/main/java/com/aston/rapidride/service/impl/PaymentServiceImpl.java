@@ -1,55 +1,86 @@
 package com.aston.rapidride.service.impl;
 
-import com.aston.rapidride.entity.Card;
+import com.aston.rapidride.dto.mapper.CardMapper;
+import com.aston.rapidride.dto.mapper.PaymentMapper;
+import com.aston.rapidride.dto.request.CardRequest;
+import com.aston.rapidride.dto.request.PaymentRequest;
+import com.aston.rapidride.dto.response.PaymentResponse;
 import com.aston.rapidride.entity.Payment;
+import com.aston.rapidride.exception.NotFoundException;
 import com.aston.rapidride.repository.PaymentRepository;
 import com.aston.rapidride.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.aston.rapidride.utility.TextConstants.PAYMENT_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
 
-    private PaymentRepository paymentRepository;
+
+    private final PaymentRepository paymentRepository;
+    private final PaymentMapper paymentMapper;
+    private final CardMapper cardMapper;
 
     @Override
-    public Payment getById(Long id){
-        return null;
-    };
+    public void createPayment(PaymentRequest paymentRequest) {
+        paymentRepository.save(paymentMapper.mapToPayment(paymentRequest));
+    }
 
-    public void createPayment (Payment payment){
-    };
+    @Override
+    public void updatePayment(Long id, PaymentRequest paymentRequest) {
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(PAYMENT_NOT_FOUND.get()));
+        payment.setFromSender(paymentRequest.getFromSender());
+        payment.setToGetter(paymentRequest.getToGetter());
+        payment.setPaymentSumm(paymentRequest.getPaymentSumm());
+        //payment.setTransactionDateTime(paymentRequest.getTransactionDateTime());
+        paymentRepository.save(payment);
+    }
 
-    public void updatePayment (Payment payment){
-    };
+    @Override
+    public void deletePayment(Long id) {
+        paymentRepository.deleteById(id);
+    }
 
-    public List<Payment> getAllPayment (){
-        return List.of();
-    };
+    @Override
+    public PaymentResponse getById(Long id) {
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(PAYMENT_NOT_FOUND.get()));
+        return paymentMapper.mapToResponse(payment);
+    }
 
-    public List<Payment> getAllPaymentBySumm(BigDecimal sum){
-        return List.of();
-    };
+    @Override
+    public List<PaymentResponse> getAllPayment() {
+        List<Payment> payments = paymentRepository.findAll();
+        return payments.stream().map(paymentMapper::mapToResponse)
+                .collect(Collectors.toList());
+    }
 
-    public List<Payment> getAllPaymentByFromCard(Card fromCard){
-        return List.of();
-    };
+    @Override
+    public List<PaymentResponse> getAllPaymentBySumm(BigDecimal sum) {
+        List<Payment> payments = paymentRepository.findByPaymentSumm(sum);
 
-    public List<Payment> getAllPaymentAfterByTransactionDate(LocalDateTime transactionDate){
-        return List.of();
-    };
+        return payments.stream().map(paymentMapper::mapToResponse).toList();
+    }
 
-    public List<Payment> getAllPaymentBeforeByTransactionDate(LocalDateTime transactionDate){
-        return List.of();
-    };
+    @Override
+    public List<PaymentResponse> getAllPaymentByFromSenderCard(CardRequest cardRequest) {
+        List<Payment> payments = paymentRepository.findByFromSender(cardMapper.mapRequestToEntity(cardRequest));
 
-    public List<Payment> getAllPaymentBetweenByTransactionDate(LocalDateTime transactionDate1, LocalDateTime transactionDate2){
-        return List.of();
-    };
+        return payments.stream().map(paymentMapper::mapToResponse).toList();
+    }
+
+    @Override
+    public List<PaymentResponse> getAllPaymentByFromGetterCard(CardRequest cardRequest) {
+        List<Payment> payments = paymentRepository.findByToGetter(cardMapper.mapRequestToEntity(cardRequest));
+
+        return payments.stream().map(paymentMapper::mapToResponse).toList();
+    }
 
 }

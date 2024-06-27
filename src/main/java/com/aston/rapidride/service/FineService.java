@@ -1,8 +1,7 @@
 package com.aston.rapidride.service;
 
-import com.aston.rapidride.entity.Car;
+import com.aston.rapidride.dto.request.FineRequest;
 import com.aston.rapidride.entity.Fine;
-import com.aston.rapidride.entity.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,17 +10,17 @@ import java.util.List;
 public interface FineService {
     Fine getById(Long id);
 
-    void createFine(Fine fine);
+    void createFine(FineRequest request);
 
-    void updateFine(Fine fine);
+    void updateFine(FineRequest request);
 
     List<Fine> getAllFine();
 
-    List<Fine> getAllFineByUser(User user);
+    List<Fine> getAllFinesByUserId(Long userId);
 
-    List<Fine> getAllFineByCar(Car car);
+    List<Fine> getAllFinesByCarId(Long carId);
 
-    Fine getFineByUserAndCar(User user, Car car);
+    List<Fine> getAllFinesByUserIdAndCarId(Long userId, Long carId);
 
     List<Fine> getFinesByRegistrationNumber(Long registrationNumber);
 
