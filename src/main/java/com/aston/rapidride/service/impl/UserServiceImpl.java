@@ -1,4 +1,5 @@
 package com.aston.rapidride.service.impl;
+
 import com.aston.rapidride.dto.mapper.UserMapper;
 import com.aston.rapidride.dto.request.UserRequest;
 import com.aston.rapidride.dto.response.UserResponse;
@@ -9,6 +10,7 @@ import com.aston.rapidride.service.UserService;
 import com.aston.rapidride.utility.TextConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service

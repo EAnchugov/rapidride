@@ -1,13 +1,11 @@
 package com.aston.rapidride.entity;
 
-import com.aston.rapidride.Roles;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
@@ -63,7 +61,7 @@ public class User implements UserDetails {
     private String roles;
 
     @OneToMany
-    private  List<UserDocument> userDocuments;
+    private List<UserDocument> userDocuments;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

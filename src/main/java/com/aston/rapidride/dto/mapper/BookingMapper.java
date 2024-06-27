@@ -10,9 +10,7 @@ import org.springframework.stereotype.Component;
 public class BookingMapper {
 
     public BookingResponse mapToResponse(Booking booking) {
-        if (booking == null) {
-            return null;
-        }
+        if (booking == null) {return null;}
 
         BookingResponse response = new BookingResponse();
         response.setId(booking.getId());

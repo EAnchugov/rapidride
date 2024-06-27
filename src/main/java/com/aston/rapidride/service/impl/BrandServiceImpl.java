@@ -1,7 +1,5 @@
 package com.aston.rapidride.service.impl;
 
-import static com.aston.rapidride.utility.TextConstants.BRAND_NOT_FOUND;
-
 import com.aston.rapidride.dto.mapper.BrandMapper;
 import com.aston.rapidride.dto.request.BrandRequest;
 import com.aston.rapidride.dto.response.BrandResponse;
@@ -13,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.aston.rapidride.utility.TextConstants.BRAND_NOT_FOUND;
 
 @Service
 @AllArgsConstructor

@@ -24,11 +24,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-
     private final UserDetailsService userDetailsService;
-
     private final JwtFilter jwtFilter;
-
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -37,8 +34,6 @@ public class SecurityConfig {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
-
-
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
