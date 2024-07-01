@@ -22,7 +22,7 @@ public class CarController {
     @PostMapping()
     public ResponseEntity<?> create(@RequestBody CarRequest carRequest) {
         carService.create(carRequest);
-        return new ResponseEntity<>("Successfully", HttpStatus.CREATED);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
