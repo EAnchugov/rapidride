@@ -18,8 +18,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "users")
 public class User implements UserDetails {
 

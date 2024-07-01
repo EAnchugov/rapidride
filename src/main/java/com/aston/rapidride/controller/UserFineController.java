@@ -4,7 +4,7 @@ import com.aston.rapidride.dto.mapper.FineMapper;
 import com.aston.rapidride.dto.response.FineResponse;
 import com.aston.rapidride.entity.Fine;
 import com.aston.rapidride.service.FineService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,15 +17,10 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/user/fines")
+@RequiredArgsConstructor
 public class UserFineController {
 
     private final FineService fineService;
-
-    @Autowired
-    public UserFineController(FineService fineService) {
-        this.fineService = fineService;
-    }
-
 
     @GetMapping("/{userId}")
     public List<FineResponse> getAllFinesByUserId(@PathVariable Long userId) {

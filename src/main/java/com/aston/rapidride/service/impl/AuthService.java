@@ -1,6 +1,6 @@
 package com.aston.rapidride.service.impl;
 
-import com.aston.rapidride.Roles;
+import com.aston.rapidride.utility.Roles;
 import com.aston.rapidride.dto.mapper.LoginMapper;
 import com.aston.rapidride.dto.mapper.UserMapper;
 import com.aston.rapidride.dto.request.LoginRequest;

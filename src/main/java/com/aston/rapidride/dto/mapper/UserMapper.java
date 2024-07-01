@@ -13,9 +13,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class UserMapper {
 
-
     private final PasswordEncoder passwordEncoder;
-
 
     public User mapToEntity(UserRequest userRequest) {
         return User.builder()

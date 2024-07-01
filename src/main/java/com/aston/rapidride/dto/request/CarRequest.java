@@ -19,7 +19,6 @@ public class CarRequest {
 
     private String photo;
 
-
     private Long brandId;
 
     private Long modelId;

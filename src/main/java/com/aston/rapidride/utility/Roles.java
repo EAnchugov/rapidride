@@ -1,4 +1,4 @@
-package com.aston.rapidride;
+package com.aston.rapidride.utility;
 
 public enum Roles {
 
