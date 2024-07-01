@@ -15,12 +15,12 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/colors")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class ColorController {
 
     private final ColorService service;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('USER')")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getById(@PathVariable Long id) {
         try {
@@ -33,6 +33,7 @@ public class ColorController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
@@ -53,6 +54,7 @@ public class ColorController {
 
     @PostMapping("/name")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAuthority('USER')")
     public ColorResponse getByName(
             @Valid @RequestBody ColorByNameFilter filter) {
         return service.getByName(filter.getName());
