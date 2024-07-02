@@ -4,24 +4,29 @@
 //import com.aston.rapidride.dto.request.BrandRequest;
 //import com.aston.rapidride.dto.response.BrandResponse;
 //import com.aston.rapidride.service.BrandService;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 //import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import org.mockito.InjectMocks;
 //import org.mockito.Mock;
 //import org.mockito.MockitoAnnotations;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+//import org.springframework.http.MediaType;
+//import org.springframework.test.web.servlet.MockMvc;
 //
-//import javax.validation.Validation;
-//import javax.validation.Validator;
-//import javax.validation.ValidatorFactory;
-//import java.util.Collections;
+//import java.util.Arrays;
 //import java.util.List;
 //
-//import static org.junit.jupiter.api.Assertions.assertEquals;
 //import static org.mockito.Mockito.*;
+//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 //
-//class BrandControllerTest {
+//@WebMvcTest(BrandController.class)
+//public class BrandControllerTest {
+//
+//    @Autowired
+//    private MockMvc mockMvc;
 //
 //    @Mock
 //    private BrandService brandService;
@@ -29,72 +34,82 @@
 //    @InjectMocks
 //    private BrandController brandController;
 //
-//    private Validator validator;
+//    private ObjectMapper objectMapper;
 //
 //    @BeforeEach
 //    void setUp() {
 //        MockitoAnnotations.openMocks(this);
-//
-//        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-//        validator = factory.getValidator();
+//        objectMapper = new ObjectMapper();
 //    }
 //
 //    @Test
-//    void getById_ShouldReturnBrandResponse_WhenBrandExists() {
-//        Long brandId = 1L;
-//        BrandResponse brandResponse = new BrandResponse();
+//    void testGetById() throws Exception {
+//        Long id = 1L;
+//        BrandResponse brandResponse = new BrandResponse(id, "BrandName");
 //
-//        when(brandService.getById(brandId)).thenReturn(brandResponse);
+//        when(brandService.getById(id)).thenReturn(brandResponse);
 //
-//        BrandResponse response = brandController.getById(brandId);
-//
-//        assertEquals(brandResponse, response);
-//        verify(brandService).getById(brandId);
+//        mockMvc.perform(get("/api/v1/brands/{id}", id))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.id").value(id))
+//                .andExpect(jsonPath("$.name").value("BrandName"));
 //    }
 //
 //    @Test
-//    void getAll_ShouldReturnListOfBrandResponses() {
-//        List<BrandResponse> brandResponses = Collections.singletonList(new BrandResponse());
+//    void testGetAll() throws Exception {
+//        List<BrandResponse> brandResponses = Arrays.asList(
+//                new BrandResponse(1L, "Brand1"),
+//                new BrandResponse(2L, "Brand2")
+//        );
 //
 //        when(brandService.getAll()).thenReturn(brandResponses);
 //
-//        List<BrandResponse> response = brandController.getAll();
-//
-//        assertEquals(brandResponses, response);
-//        verify(brandService).getAll();
+//        mockMvc.perform(get("/api/v1/brands"))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$[0].id").value(1L))
+//                .andExpect(jsonPath("$[0].name").value("Brand1"))
+//                .andExpect(jsonPath("$[1].id").value(2L))
+//                .andExpect(jsonPath("$[1].name").value("Brand2"));
 //    }
 //
 //    @Test
-//    void create_ShouldInvokeCreateMethodInService() {
-//        BrandRequest brandRequest = new BrandRequest();
+//    void testCreate() throws Exception {
+//        BrandRequest brandRequest = new BrandRequest("BrandName");
 //
-//        brandController.create(brandRequest);
+//        mockMvc.perform(post("/api/v1/brands")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(brandRequest)))
+//                .andExpect(status().isCreated());
 //
-//        verify(brandService).create(brandRequest);
+//        verify(brandService, times(1)).create(any(BrandRequest.class));
 //    }
 //
 //    @Test
-//    void update_ShouldInvokeUpdateMethodInService() {
-//        Long brandId = 1L;
-//        BrandRequest brandRequest = new BrandRequest();
+//    void testUpdate() throws Exception {
+//        Long id = 1L;
+//        BrandRequest brandRequest = new BrandRequest("UpdatedBrandName");
 //
-//        brandController.update(brandId, brandRequest);
+//        mockMvc.perform(put("/api/v1/brands/{id}", id)
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(brandRequest)))
+//                .andExpect(status().isOk());
 //
-//        verify(brandService).update(brandId, brandRequest);
+//        verify(brandService, times(1)).update(eq(id), any(BrandRequest.class));
 //    }
 //
 //    @Test
-//    void getByName_ShouldReturnBrandResponse_WhenBrandExists() {
-//        String brandName = "TestBrand";
-//        BrandByNameFilter filter = new BrandByNameFilter();
-//        filter.setName(brandName);
-//        BrandResponse brandResponse = new BrandResponse();
+//    void testGetByName() throws Exception {
+//        String name = "BrandName";
+//        BrandResponse brandResponse = new BrandResponse(1L, name);
+//        BrandByNameFilter filter = new BrandByNameFilter(name);
 //
-//        when(brandService.getByName(brandName)).thenReturn(brandResponse);
+//        when(brandService.getByName(name)).thenReturn(brandResponse);
 //
-//        BrandResponse response = brandController.getByName(filter);
-//
-//        assertEquals(brandResponse, response);
-//        verify(brandService).getByName(brandName);
+//        mockMvc.perform(post("/api/v1/brands/name")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(objectMapper.writeValueAsString(filter)))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.id").value(1L))
+//                .andExpect(jsonPath("$.name").value(name));
 //    }
 //}
