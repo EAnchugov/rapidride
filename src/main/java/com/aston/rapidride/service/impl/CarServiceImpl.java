@@ -106,6 +106,9 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteById(Long id) {
+        if (!carRepository.existsById(id)) {
+            throw new NotFoundException(CAR_NOT_FOUND.get());
+        }
         carRepository.deleteById(id);
     }
 

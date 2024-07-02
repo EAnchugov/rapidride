@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
@@ -26,7 +28,7 @@ public class AuthController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestParam String password, @RequestParam("token") String token) {
+    public ResponseEntity<?> resetPassword(@RequestParam String password, String token) {
         try {
             authService.resetPassword(password, token);
         } catch (Exception e) {
