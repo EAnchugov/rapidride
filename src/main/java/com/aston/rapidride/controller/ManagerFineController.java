@@ -5,7 +5,7 @@ import com.aston.rapidride.dto.request.FineRequest;
 import com.aston.rapidride.dto.response.FineResponse;
 import com.aston.rapidride.entity.Fine;
 import com.aston.rapidride.service.FineService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,15 +19,10 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/manager/fines")
+@RequiredArgsConstructor
 public class ManagerFineController {
 
     private final FineService fineService;
-
-
-    @Autowired
-    public ManagerFineController(FineService fineService) {
-        this.fineService = fineService;
-    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -67,7 +62,6 @@ public class ManagerFineController {
         return fines.stream().map(FineMapper::toFineResponse).collect(Collectors.toList());
     }
 
-    //
     @GetMapping("/user/{userId}/car/{carId}")
     public ResponseEntity<List<FineResponse>> getFineByUserIdAndCarId(@PathVariable Long userId,
                                                                       @PathVariable Long carId) {

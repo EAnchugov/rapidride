@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CarStatusServiceImpl implements CarStatusService {
@@ -27,7 +28,7 @@ public class CarStatusServiceImpl implements CarStatusService {
 
     @Override
     public CarStatusResponse update(Long id, CarStatusRequest carStatusRequest) {
-        CarStatus carStatusDB = carStatusRepository.findById(id).orElseThrow(()-> new NotFoundException("Car status not found"));
+        CarStatus carStatusDB = carStatusRepository.findById(id).orElseThrow(() -> new NotFoundException("Car status not found"));
         carStatusDB.setName(carStatusRequest.getName());
         carStatusRepository.save(carStatusDB);
         return mapper.mapToResponse(carStatusDB);
@@ -35,7 +36,7 @@ public class CarStatusServiceImpl implements CarStatusService {
 
     @Override
     public CarStatusResponse findById(Long id) {
-        CarStatus carStatus = carStatusRepository.findById(id).orElseThrow(()-> new NotFoundException("Car status not found"));
+        CarStatus carStatus = carStatusRepository.findById(id).orElseThrow(() -> new NotFoundException("Car status not found"));
         return mapper.mapToResponse(carStatus);
     }
 

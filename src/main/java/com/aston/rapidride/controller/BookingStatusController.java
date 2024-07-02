@@ -21,9 +21,6 @@ public class BookingStatusController {
     @GetMapping("/{id}")
     public ResponseEntity<BookingStatusResponse> findById(@PathVariable Long id) {
         BookingStatusResponse bookingStatus = bookingStatusService.getById(id);
-        if (bookingStatus == null) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<>(bookingStatus, HttpStatus.OK);
     }
 
@@ -42,9 +39,6 @@ public class BookingStatusController {
     @GetMapping()
     public ResponseEntity<List<BookingStatusResponse>> findAll() {
         List<BookingStatusResponse> bookingStatuses = bookingStatusService.getAllBookingStatuses();
-        if (bookingStatuses == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return new ResponseEntity<>(bookingStatuses, HttpStatus.FOUND);
+        return new ResponseEntity<>(bookingStatuses, HttpStatus.OK);
     }
 }

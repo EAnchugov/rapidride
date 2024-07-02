@@ -1,17 +1,20 @@
 package com.aston.rapidride.dto.response;
 
-import com.aston.rapidride.dto.request.AddressRequest;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserResponse {
+    private Long id;
     private String firstName;
     private String lastName;
-    private String phone;
     private String email;
-    private AddressResponse addressResponse;
+    private String password;
+    private String phoneNumber;
+    private LocalDateTime createdDate;
 }
