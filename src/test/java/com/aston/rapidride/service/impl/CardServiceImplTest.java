@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.aston.rapidride.utility.TextConstants.CARD_NOT_FOUND;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class CardServiceImplTest {

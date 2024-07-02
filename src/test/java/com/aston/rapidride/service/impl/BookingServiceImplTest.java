@@ -7,7 +7,6 @@ import com.aston.rapidride.dto.response.BookingResponse;
 import com.aston.rapidride.entity.*;
 import com.aston.rapidride.exception.NotFoundException;
 import com.aston.rapidride.repository.*;
-import com.aston.rapidride.service.BookingService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class BookingServiceImplTest {
@@ -138,7 +136,7 @@ public class BookingServiceImplTest {
         when(mapper.mapToEntity(request)).thenReturn(booking);
         when(carRepository.findById(id)).thenReturn(Optional.empty());
 
-        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+        NotFoundException thrown = assertThrows(NotFoundException.class, () -> {
             bookingService.createBooking(request);
         });
 
@@ -163,7 +161,7 @@ public class BookingServiceImplTest {
 
         when(userRepository.findById(id)).thenReturn(Optional.empty());
 
-        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+        NotFoundException thrown = assertThrows(NotFoundException.class, () -> {
             bookingService.createBooking(request);
         });
 
@@ -193,7 +191,7 @@ public class BookingServiceImplTest {
 
         when(paymentRepository.findById(id)).thenReturn(Optional.empty());
 
-        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+        NotFoundException thrown = assertThrows(NotFoundException.class, () -> {
             bookingService.createBooking(request);
         });
 
@@ -228,7 +226,7 @@ public class BookingServiceImplTest {
 
         when(bookingStatusRepository.findById(id)).thenReturn(Optional.empty());
 
-        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+        NotFoundException thrown = assertThrows(NotFoundException.class, () -> {
             bookingService.createBooking(request);
         });
 

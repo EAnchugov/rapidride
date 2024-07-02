@@ -7,15 +7,12 @@ import com.aston.rapidride.dto.request.PaymentRequest;
 import com.aston.rapidride.dto.response.PaymentResponse;
 import com.aston.rapidride.entity.Card;
 import com.aston.rapidride.entity.Payment;
-import com.aston.rapidride.repository.CardRepository;
 import com.aston.rapidride.repository.PaymentRepository;
-import com.aston.rapidride.service.PaymentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.access.method.P;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,7 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -89,8 +87,8 @@ class PaymentServiceImplTest {
 
         paymentService.updatePayment(id, paymentRequest);
 
-        verify(paymentRepository,times(1)).findById(id);
-        verify(paymentRepository,times(1)).save(payment);
+        verify(paymentRepository, times(1)).findById(id);
+        verify(paymentRepository, times(1)).save(payment);
     }
 
     @Test
@@ -104,7 +102,7 @@ class PaymentServiceImplTest {
     }
 
     @Test
-    public void getByIdTest(){
+    public void getByIdTest() {
         Long id = 1L;
         Payment payment = new Payment();
         payment.setId(id);
@@ -122,7 +120,7 @@ class PaymentServiceImplTest {
     }
 
     @Test
-    public void getAllPaymentsTest(){
+    public void getAllPaymentsTest() {
         Long id = 1L;
         Long id1 = 2L;
         List<Payment> payments = new ArrayList<>();
@@ -147,7 +145,7 @@ class PaymentServiceImplTest {
     }
 
     @Test
-    public void getAllPaymentBySummTest(){
+    public void getAllPaymentBySummTest() {
         Long id = 1L;
         BigDecimal sum = BigDecimal.valueOf(10000L);
         List<Payment> payments = new ArrayList<>();
@@ -172,7 +170,7 @@ class PaymentServiceImplTest {
     }
 
     @Test
-    public void getAllPaymentByFromSenderCardTest(){
+    public void getAllPaymentByFromSenderCardTest() {
         Long id = 1L;
         Long number = 2345245365432098L;
         Card card = new Card();
@@ -208,7 +206,7 @@ class PaymentServiceImplTest {
     }
 
     @Test
-    public void getAllPaymentByToGetterCardTest(){
+    public void getAllPaymentByToGetterCardTest() {
         Long id = 1L;
         Long number = 2345245365432098L;
         Card card = new Card();

@@ -144,7 +144,7 @@ class CarServiceImplTest {
         when(carMapper.mapToEntity(carRequest)).thenReturn(car);
         when(brandRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, ()-> {
+        assertThrows(NotFoundException.class, () -> {
             carService.create(carRequest);
         });
     }
@@ -155,7 +155,7 @@ class CarServiceImplTest {
         when(brandRepository.findById(1L)).thenReturn(Optional.of(new Brand()));
         when(colorRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, ()-> {
+        assertThrows(NotFoundException.class, () -> {
                     carService.create(carRequest);
                 }
         );
@@ -168,7 +168,7 @@ class CarServiceImplTest {
         when(colorRepository.findById(1L)).thenReturn(Optional.of(new Color()));
         when(modelRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, ()-> {
+        assertThrows(NotFoundException.class, () -> {
             carService.create(carRequest);
         });
     }
@@ -181,11 +181,12 @@ class CarServiceImplTest {
         when(modelRepository.findById(1L)).thenReturn(Optional.of(new Model()));
         when(engineTypeRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, ()-> {
+        assertThrows(NotFoundException.class, () -> {
             carService.create(carRequest);
         });
         verify(engineTypeRepository).findById(1L);
     }
+
     @Test
     public void testCreateCar_CarStatusNotFound() {
         when(carMapper.mapToEntity(carRequest)).thenReturn(car);
@@ -195,7 +196,7 @@ class CarServiceImplTest {
         when(engineTypeRepository.findById(1L)).thenReturn(Optional.of(new EngineType()));
         when(carStatusRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, ()-> {
+        assertThrows(NotFoundException.class, () -> {
             carService.create(carRequest);
         });
     }
