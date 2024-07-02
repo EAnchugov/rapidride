@@ -6,127 +6,141 @@ import com.aston.rapidride.dto.response.EngineTypeResponse;
 import com.aston.rapidride.entity.EngineType;
 import com.aston.rapidride.exception.NotFoundException;
 import com.aston.rapidride.repository.EngineTypeRepository;
+import com.aston.rapidride.utility.TextConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-/**
- * @author Azimov Ruslan
- */
-@ExtendWith(MockitoExtension.class)
-public class EngineTypeServiceImplTest {
+class EngineTypeServiceImplTest {
 
     @Mock
-    EngineTypeRepository repository;
+    private EngineTypeRepository repository;
 
     @Mock
-    EngineTypeMapper mapper;
+    private EngineTypeMapper mapper;
 
     @InjectMocks
-    EngineTypeServiceImpl service;
-
-    private EngineTypeRequest request;
-
-    private EngineTypeResponse response;
-
-    private EngineType type;
+    private EngineTypeServiceImpl engineTypeService;
 
     @BeforeEach
-    void init() {
-        request = new EngineTypeRequest();
-        request.setName("Diesel");
-
-        type = new EngineType();
-        type.setName("Diesel");
-
-        response = new EngineTypeResponse();
-        response.setId(1L);
-        response.setName("Diesel");
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void createColor_successTest() {
-        when(mapper.mapRequestToEntity(request)).thenReturn(type);
+    void getById_ShouldReturnEngineTypeResponse_WhenEngineTypeExists() {
+        Long engineTypeId = 1L;
+        EngineType engineType = new EngineType();
+        EngineTypeResponse engineTypeResponse = new EngineTypeResponse();
 
-        service.create(request);
+        when(repository.findById(engineTypeId)).thenReturn(Optional.of(engineType));
+        when(mapper.mapToResponse(engineType)).thenReturn(engineTypeResponse);
 
-        verify(mapper).mapRequestToEntity(request);
-        verify(repository).save(type);
+        EngineTypeResponse result = engineTypeService.getById(engineTypeId);
+
+        assertEquals(engineTypeResponse, result);
+        verify(repository).findById(engineTypeId);
+        verify(mapper).mapToResponse(engineType);
     }
 
     @Test
-    void updateColor_successTest() {
-        when(repository.findById(1L)).thenReturn(Optional.of(new EngineType()));
-        when(mapper.mapToResponse(any(EngineType.class))).thenReturn(response);
+    void getById_ShouldThrowNotFoundException_WhenEngineTypeDoesNotExist() {
+        Long engineTypeId = 1L;
 
-        service.update(1L, request);
-        EngineTypeResponse result = service.getById(1L);
+        when(repository.findById(engineTypeId)).thenReturn(Optional.empty());
 
-        assertEquals(response, result);
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> engineTypeService.getById(engineTypeId));
+        assertEquals(TextConstants.ENGINE_TYPE_NOT_FOUND.get(), exception.getMessage());
+        verify(repository).findById(engineTypeId);
     }
 
     @Test
-    public void findById_successTes() {
-        when(repository.findById(1L)).thenReturn(Optional.of(type));
-        when(mapper.mapToResponse(any(EngineType.class))).thenReturn(response);
+    void getAll_ShouldReturnListOfEngineTypeResponses() {
+        List<EngineType> engineTypes = List.of(new EngineType());
+        List<EngineTypeResponse> engineTypeResponses = List.of(new EngineTypeResponse());
 
-        EngineTypeResponse result = service.getById(1L);
+        when(repository.findAll()).thenReturn(engineTypes);
+        when(mapper.mapToResponse(any(EngineType.class))).thenReturn(engineTypeResponses.get(0));
 
-        verify(repository).findById(1L);
-        verify(mapper).mapToResponse(type);
+        List<EngineTypeResponse> result = engineTypeService.getAll();
 
-        assertEquals(response, result);
-    }
-
-    @Test
-    public void testFindByIdNotFound() {
-        when(repository.findById(1L)).thenReturn(Optional.empty());
-
-        NotFoundException thrown = assertThrows(NotFoundException.class, () -> {
-            service.getById(1L);
-        });
-
-        assertEquals("Engine type not found", thrown.getMessage());
-        verify(repository).findById(1L);
-        verify(mapper, never()).mapToResponse(any(EngineType.class));
-    }
-
-
-    @Test
-    public void testFindAllSuccess() {
-        List<EngineType> types = Collections.singletonList(type);
-        when(repository.findAll()).thenReturn(types);
-        when(mapper.mapToResponse(type)).thenReturn(response);
-
-        List<EngineTypeResponse> result = service.getAll();
-
+        assertEquals(engineTypeResponses, result);
         verify(repository).findAll();
-        verify(mapper).mapToResponse(type);
-
-        assertEquals(1, result.size());
-        assertTrue(result.contains(response));
+        verify(mapper, times(engineTypes.size())).mapToResponse(any(EngineType.class));
     }
 
     @Test
-    public void testFindAllEmptyList() {
-        when(repository.findAll()).thenReturn(Collections.emptyList());
+    void create_ShouldSaveEngineType() {
+        EngineTypeRequest request = new EngineTypeRequest();
+        EngineType engineType = new EngineType();
 
-        List<EngineTypeResponse> result = service.getAll();
+        when(mapper.mapRequestToEntity(request)).thenReturn(engineType);
 
-        verify(repository).findAll();
-        verify(mapper, never()).mapToResponse(any(EngineType.class));
+        engineTypeService.create(request);
 
-        assertTrue(result.isEmpty());
+        verify(repository).save(engineType);
+    }
+
+    @Test
+    void update_ShouldUpdateEngineType_WhenEngineTypeExists() {
+        Long engineTypeId = 1L;
+        EngineTypeRequest request = new EngineTypeRequest();
+        EngineType engineType = new EngineType();
+
+        when(repository.findById(engineTypeId)).thenReturn(Optional.of(engineType));
+
+        engineTypeService.update(engineTypeId, request);
+
+        verify(repository).findById(engineTypeId);
+        verify(repository).save(engineType);
+        assertEquals(request.getName(), engineType.getName());
+    }
+
+    @Test
+    void update_ShouldThrowNotFoundException_WhenEngineTypeDoesNotExist() {
+        Long engineTypeId = 1L;
+        EngineTypeRequest request = new EngineTypeRequest();
+
+        when(repository.findById(engineTypeId)).thenReturn(Optional.empty());
+
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> engineTypeService.update(engineTypeId, request));
+        assertEquals(TextConstants.ENGINE_TYPE_NOT_FOUND.get(), exception.getMessage());
+        verify(repository).findById(engineTypeId);
+    }
+
+    @Test
+    void getByName_ShouldReturnEngineTypeResponse_WhenEngineTypeExists() {
+        String name = "Diesel";
+        EngineType engineType = new EngineType();
+        EngineTypeResponse engineTypeResponse = new EngineTypeResponse();
+
+        when(repository.findEngineTypeByName(name)).thenReturn(engineType);
+        when(mapper.mapToResponse(engineType)).thenReturn(engineTypeResponse);
+
+        EngineTypeResponse result = engineTypeService.getByName(name);
+
+        assertEquals(engineTypeResponse, result);
+        verify(repository).findEngineTypeByName(name);
+        verify(mapper).mapToResponse(engineType);
+    }
+
+    @Test
+    void getByName_ShouldThrowNotFoundException_WhenEngineTypeDoesNotExist() {
+        String name = "Diesel";
+
+        when(repository.findEngineTypeByName(name)).thenReturn(null);
+
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> engineTypeService.getByName(name));
+        assertEquals(TextConstants.ENGINE_TYPE_NOT_FOUND.get(), exception.getMessage());
+        verify(repository).findEngineTypeByName(name);
     }
 }

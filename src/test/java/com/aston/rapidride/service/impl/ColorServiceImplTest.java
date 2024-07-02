@@ -6,126 +6,141 @@ import com.aston.rapidride.dto.response.ColorResponse;
 import com.aston.rapidride.entity.Color;
 import com.aston.rapidride.exception.NotFoundException;
 import com.aston.rapidride.repository.ColorRepository;
+import com.aston.rapidride.utility.TextConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-/**
- * @author Azimov Ruslan
- */
-@ExtendWith(MockitoExtension.class)
-public class ColorServiceImplTest {
+class ColorServiceImplTest {
 
     @Mock
-    ColorRepository repository;
+    private ColorRepository repository;
 
     @Mock
-    ColorMapper mapper;
+    private ColorMapper mapper;
 
     @InjectMocks
-    ColorServiceImpl service;
-
-    private ColorRequest request;
-
-    private ColorResponse response;
-
-    private Color color;
+    private ColorServiceImpl colorService;
 
     @BeforeEach
-    void init() {
-        request = new ColorRequest();
-        request.setName("Orange");
-
-        color = new Color();
-        color.setName("Orange");
-
-        response = new ColorResponse();
-        response.setId(1L);
-        response.setName("Orange");
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void createColor_successTest() {
+    void getById_ShouldReturnColorResponse_WhenColorExists() {
+        Long colorId = 1L;
+        Color color = new Color();
+        ColorResponse colorResponse = new ColorResponse();
+
+        when(repository.findById(colorId)).thenReturn(Optional.of(color));
+        when(mapper.mapToResponse(color)).thenReturn(colorResponse);
+
+        ColorResponse result = colorService.getById(colorId);
+
+        assertEquals(colorResponse, result);
+        verify(repository).findById(colorId);
+        verify(mapper).mapToResponse(color);
+    }
+
+    @Test
+    void getById_ShouldThrowNotFoundException_WhenColorDoesNotExist() {
+        Long colorId = 1L;
+
+        when(repository.findById(colorId)).thenReturn(Optional.empty());
+
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> colorService.getById(colorId));
+        assertEquals(TextConstants.COLOR_NOT_FOUND.get(), exception.getMessage());
+        verify(repository).findById(colorId);
+    }
+
+    @Test
+    void getAll_ShouldReturnListOfColorResponses() {
+        List<Color> colors = List.of(new Color());
+        List<ColorResponse> colorResponses = List.of(new ColorResponse());
+
+        when(repository.findAll()).thenReturn(colors);
+        when(mapper.mapToResponse(any(Color.class))).thenReturn(colorResponses.get(0));
+
+        List<ColorResponse> result = colorService.getAll();
+
+        assertEquals(colorResponses, result);
+        verify(repository).findAll();
+        verify(mapper, times(colors.size())).mapToResponse(any(Color.class));
+    }
+
+    @Test
+    void create_ShouldSaveColor() {
+        ColorRequest request = new ColorRequest();
+        Color color = new Color();
+
         when(mapper.mapRequestToEntity(request)).thenReturn(color);
 
-        service.create(request);
+        colorService.create(request);
 
-        verify(mapper).mapRequestToEntity(request);
         verify(repository).save(color);
     }
 
     @Test
-    void updateColor_successTest() {
-        when(repository.findById(1L)).thenReturn(Optional.of(new Color()));
-        when(mapper.mapToResponse(any(Color.class))).thenReturn(response);
+    void update_ShouldUpdateColor_WhenColorExists() {
+        Long colorId = 1L;
+        ColorRequest request = new ColorRequest();
+        Color color = new Color();
 
-        service.update(1L, request);
-        ColorResponse result = service.getById(1L);
+        when(repository.findById(colorId)).thenReturn(Optional.of(color));
 
-        assertEquals(response, result);
+        colorService.update(colorId, request);
+
+        verify(repository).findById(colorId);
+        verify(repository).save(color);
+        assertEquals(request.getName(), color.getName());
     }
 
     @Test
-    public void findById_successTes() {
-        when(repository.findById(1L)).thenReturn(Optional.of(color));
-        when(mapper.mapToResponse(any(Color.class))).thenReturn(response);
+    void update_ShouldThrowNotFoundException_WhenColorDoesNotExist() {
+        Long colorId = 1L;
+        ColorRequest request = new ColorRequest();
 
-        ColorResponse result = service.getById(1L);
+        when(repository.findById(colorId)).thenReturn(Optional.empty());
 
-        verify(repository).findById(1L);
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> colorService.update(colorId, request));
+        assertEquals(TextConstants.COLOR_NOT_FOUND.get(), exception.getMessage());
+        verify(repository).findById(colorId);
+    }
+
+    @Test
+    void getByName_ShouldReturnColorResponse_WhenColorExists() {
+        String name = "Red";
+        Color color = new Color();
+        ColorResponse colorResponse = new ColorResponse();
+
+        when(repository.findColorByName(name)).thenReturn(color);
+        when(mapper.mapToResponse(color)).thenReturn(colorResponse);
+
+        ColorResponse result = colorService.getByName(name);
+
+        assertEquals(colorResponse, result);
+        verify(repository).findColorByName(name);
         verify(mapper).mapToResponse(color);
-
-        assertEquals(response, result);
     }
 
     @Test
-    public void testFindByIdNotFound() {
-        when(repository.findById(1L)).thenReturn(Optional.empty());
+    void getByName_ShouldThrowNotFoundException_WhenColorDoesNotExist() {
+        String name = "Red";
 
-        NotFoundException thrown = assertThrows(NotFoundException.class, () -> {
-            service.getById(1L);
-        });
+        when(repository.findColorByName(name)).thenReturn(null);
 
-        assertEquals("Color not found", thrown.getMessage());
-        verify(repository).findById(1L);
-        verify(mapper, never()).mapToResponse(any(Color.class));
-    }
-
-
-    @Test
-    public void testFindAllSuccess() {
-        List<Color> colors = Collections.singletonList(color);
-        when(repository.findAll()).thenReturn(colors);
-        when(mapper.mapToResponse(color)).thenReturn(response);
-
-        List<ColorResponse> result = service.getAll();
-
-        verify(repository).findAll();
-        verify(mapper).mapToResponse(color);
-
-        assertEquals(1, result.size());
-        assertTrue(result.contains(response));
-    }
-
-    @Test
-    public void testFindAllEmptyList() {
-        when(repository.findAll()).thenReturn(Collections.emptyList());
-
-        List<ColorResponse> result = service.getAll();
-
-        verify(repository).findAll();
-        verify(mapper, never()).mapToResponse(any(Color.class));
-
-        assertTrue(result.isEmpty());
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> colorService.getByName(name));
+        assertEquals(TextConstants.COLOR_NOT_FOUND.get(), exception.getMessage());
+        verify(repository).findColorByName(name);
     }
 }

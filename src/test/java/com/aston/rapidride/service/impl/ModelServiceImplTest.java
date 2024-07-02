@@ -6,127 +6,141 @@ import com.aston.rapidride.dto.response.ModelResponse;
 import com.aston.rapidride.entity.Model;
 import com.aston.rapidride.exception.NotFoundException;
 import com.aston.rapidride.repository.ModelRepository;
+import com.aston.rapidride.utility.TextConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-/**
- * @author Azimov Ruslan
- */
-@ExtendWith(MockitoExtension.class)
-public class ModelServiceImplTest {
+class ModelServiceImplTest {
 
     @Mock
-    ModelRepository repository;
+    private ModelRepository repository;
 
     @Mock
-    ModelMapper mapper;
+    private ModelMapper mapper;
 
     @InjectMocks
-    ModelServiceImpl service;
-
-    private ModelRequest request;
-
-    private ModelResponse response;
-
-    private Model model;
+    private ModelServiceImpl modelService;
 
     @BeforeEach
-    void init() {
-        request = new ModelRequest();
-        request.setName("911 turbo s");
-
-        model = new Model();
-        model.setName("911 turbo s");
-
-        response = new ModelResponse();
-        response.setId(1L);
-        response.setName("911 turbo s");
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    void createColor_successTest() {
+    void getById_ShouldReturnModelResponse_WhenModelExists() {
+        Long modelId = 1L;
+        Model model = new Model();
+        ModelResponse modelResponse = new ModelResponse();
+
+        when(repository.findById(modelId)).thenReturn(Optional.of(model));
+        when(mapper.mapToResponse(model)).thenReturn(modelResponse);
+
+        ModelResponse result = modelService.getById(modelId);
+
+        assertEquals(modelResponse, result);
+        verify(repository).findById(modelId);
+        verify(mapper).mapToResponse(model);
+    }
+
+    @Test
+    void getById_ShouldThrowNotFoundException_WhenModelDoesNotExist() {
+        Long modelId = 1L;
+
+        when(repository.findById(modelId)).thenReturn(Optional.empty());
+
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> modelService.getById(modelId));
+        assertEquals(TextConstants.MODEL_NOT_FOUND.get(), exception.getMessage());
+        verify(repository).findById(modelId);
+    }
+
+    @Test
+    void getAll_ShouldReturnListOfModelResponses() {
+        List<Model> models = List.of(new Model());
+        List<ModelResponse> modelResponses = List.of(new ModelResponse());
+
+        when(repository.findAll()).thenReturn(models);
+        when(mapper.mapToResponse(any(Model.class))).thenReturn(modelResponses.get(0));
+
+        List<ModelResponse> result = modelService.getAll();
+
+        assertEquals(modelResponses, result);
+        verify(repository).findAll();
+        verify(mapper, times(models.size())).mapToResponse(any(Model.class));
+    }
+
+    @Test
+    void create_ShouldSaveModel() {
+        ModelRequest request = new ModelRequest();
+        Model model = new Model();
+
         when(mapper.mapRequestToEntity(request)).thenReturn(model);
 
-        service.create(request);
+        modelService.create(request);
 
-        verify(mapper).mapRequestToEntity(request);
         verify(repository).save(model);
     }
 
     @Test
-    void updateColor_successTest() {
-        when(repository.findById(1L)).thenReturn(Optional.of(new Model()));
-        when(mapper.mapToResponse(any(Model.class))).thenReturn(response);
+    void update_ShouldUpdateModel_WhenModelExists() {
+        Long modelId = 1L;
+        ModelRequest request = new ModelRequest();
+        Model model = new Model();
 
-        service.update(1L, request);
-        ModelResponse result = service.getById(1L);
+        when(repository.findById(modelId)).thenReturn(Optional.of(model));
 
-        assertEquals(response, result);
+        modelService.update(modelId, request);
+
+        verify(repository).findById(modelId);
+        verify(repository).save(model);
+        assertEquals(request.getName(), model.getName());
     }
 
     @Test
-    public void findById_successTes() {
-        when(repository.findById(1L)).thenReturn(Optional.of(model));
-        when(mapper.mapToResponse(any(Model.class))).thenReturn(response);
+    void update_ShouldThrowNotFoundException_WhenModelDoesNotExist() {
+        Long modelId = 1L;
+        ModelRequest request = new ModelRequest();
 
-        ModelResponse result = service.getById(1L);
+        when(repository.findById(modelId)).thenReturn(Optional.empty());
 
-        verify(repository).findById(1L);
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> modelService.update(modelId, request));
+        assertEquals(TextConstants.MODEL_NOT_FOUND.get(), exception.getMessage());
+        verify(repository).findById(modelId);
+    }
+
+    @Test
+    void getByName_ShouldReturnModelResponse_WhenModelExists() {
+        String name = "Sedan";
+        Model model = new Model();
+        ModelResponse modelResponse = new ModelResponse();
+
+        when(repository.findModelByName(name)).thenReturn(model);
+        when(mapper.mapToResponse(model)).thenReturn(modelResponse);
+
+        ModelResponse result = modelService.getByName(name);
+
+        assertEquals(modelResponse, result);
+        verify(repository).findModelByName(name);
         verify(mapper).mapToResponse(model);
-
-        assertEquals(response, result);
     }
 
     @Test
-    public void testFindByIdNotFound() {
-        when(repository.findById(1L)).thenReturn(Optional.empty());
+    void getByName_ShouldThrowNotFoundException_WhenModelDoesNotExist() {
+        String name = "Sedan";
 
-        NotFoundException thrown = assertThrows(NotFoundException.class, () -> {
-            service.getById(1L);
-        });
+        when(repository.findModelByName(name)).thenReturn(null);
 
-        assertEquals("Model not found", thrown.getMessage());
-        verify(repository).findById(1L);
-        verify(mapper, never()).mapToResponse(any(Model.class));
-    }
-
-
-    @Test
-    public void testFindAllSuccess() {
-        List<Model> models = Collections.singletonList(model);
-        when(repository.findAll()).thenReturn(models);
-        when(mapper.mapToResponse(model)).thenReturn(response);
-
-        List<ModelResponse> result = service.getAll();
-
-        verify(repository).findAll();
-        verify(mapper).mapToResponse(model);
-
-        assertEquals(1, result.size());
-        assertTrue(result.contains(response));
-    }
-
-    @Test
-    public void testFindAllEmptyList() {
-        when(repository.findAll()).thenReturn(Collections.emptyList());
-
-        List<ModelResponse> result = service.getAll();
-
-        verify(repository).findAll();
-        verify(mapper, never()).mapToResponse(any(Model.class));
-
-        assertTrue(result.isEmpty());
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> modelService.getByName(name));
+        assertEquals(TextConstants.MODEL_NOT_FOUND.get(), exception.getMessage());
+        verify(repository).findModelByName(name);
     }
 }

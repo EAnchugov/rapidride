@@ -26,7 +26,7 @@ import static org.mockito.Mockito.*;
 
 class FineServiceImplTest {
     FineRequest fineRequest = FineRequest.builder()
-            . id(1L)
+            .id(1L)
             .carId(1L)
             .userId(1L)
             .date(LocalDate.now())
@@ -53,7 +53,6 @@ class FineServiceImplTest {
     }
 
 
-
     @Test
     void testGetById() {
         Fine fine = new Fine();
@@ -73,7 +72,7 @@ class FineServiceImplTest {
 
     @Test
     void testCreateFine() {
-        FineRequest request =fineRequest;
+        FineRequest request = fineRequest;
         request.setId(1L);
         request.setCarId(1L);
         request.setUserId(1L);
