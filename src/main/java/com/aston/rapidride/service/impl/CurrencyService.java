@@ -1,7 +1,6 @@
 package com.aston.rapidride.service.impl;
 
 import com.aston.rapidride.dto.response.CurrencyDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
