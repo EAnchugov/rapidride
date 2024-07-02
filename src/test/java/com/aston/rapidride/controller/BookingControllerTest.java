@@ -6,7 +6,11 @@ import com.aston.rapidride.dto.response.BookingResponse;
 import com.aston.rapidride.service.BookingService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -16,11 +20,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class BookingControllerTest {
 
-    private final BookingService bookingService = Mockito.mock(BookingService.class);
+    @Mock
+    private BookingService bookingService;
 
-    private final BookingController bookingController = new BookingController(bookingService);
+    @InjectMocks
+    private BookingController bookingController;
 
     @Test
     @DisplayName("Test find booking by id")

@@ -1,28 +1,41 @@
-package com.aston.rapidride.service;
+package com.aston.rapidride.service.impl;
 
 import com.aston.rapidride.dto.mapper.BookingStatusMapper;
 import com.aston.rapidride.dto.request.BookingStatusRequest;
 import com.aston.rapidride.dto.response.BookingStatusResponse;
+import com.aston.rapidride.dto.response.CarResponse;
 import com.aston.rapidride.entity.*;
+import com.aston.rapidride.exception.NotFoundException;
 import com.aston.rapidride.repository.BookingStatusRepository;
-import com.aston.rapidride.service.impl.BookingStatusServiceImpl;
+import com.aston.rapidride.service.BookingStatusService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
-public class BookingStatusServiceTest {
+@ExtendWith(MockitoExtension.class)
+public class BookingStatusServiceImplTest {
 
-    private final BookingStatusRepository repository = Mockito.mock(BookingStatusRepository.class);
+    @Mock
+    private BookingStatusRepository repository;
 
-    private final BookingStatusMapper mapper = Mockito.mock(BookingStatusMapper.class);
+    @Mock
+    private BookingStatusMapper mapper;
 
-    private final BookingStatusService service = new BookingStatusServiceImpl(repository, mapper);
+    @InjectMocks
+    private BookingStatusServiceImpl service;
 
     @Test
     @DisplayName("Test find booking status by id")
@@ -41,6 +54,21 @@ public class BookingStatusServiceTest {
 
         assertEquals(expected.getId(), result.getId());
         Mockito.verify(repository, Mockito.times(1)).findById(id);
+    }
+
+    @Test
+    @DisplayName("Test find booking status by id, but id not found")
+    public void testGetByIdNotFound() {
+        Long id = 1L;
+        Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, () -> {
+            service.getById(id);
+        });
+
+        assertEquals("Booking status not found", thrown.getMessage());
+        verify(repository, Mockito.times(1)).findById(id);
+        verify(mapper, never()).mapToResponse(any(BookingStatus.class));
     }
 
     @Test
@@ -81,6 +109,24 @@ public class BookingStatusServiceTest {
     }
 
     @Test
+    @DisplayName("Test booking status update, but id not found")
+    public void testUpdateButIdNotFound() {
+        Long id = 1L;
+        BookingStatusRequest request = new BookingStatusRequest();
+
+        Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, () -> {
+            service.updateBookingStatus(1L, request);
+        });
+
+        assertEquals("Booking status not found", thrown.getMessage());
+        verify(repository, Mockito.times(1)).findById(id);
+        verify(repository, never()).save(any(BookingStatus.class));
+        verify(mapper, never()).mapToResponse(any(BookingStatus.class));
+    }
+
+    @Test
     @DisplayName("Test find all booking statuses")
     public void testGetAllBookingStatuses() {
         Long id = 1L;
@@ -102,5 +148,18 @@ public class BookingStatusServiceTest {
         assertEquals(bookingStatusResponses.size(), result.size());
 
         Mockito.verify(repository, Mockito.times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("Test find all booking statuses, but result list is empty")
+    public void testFindAllEmptyList() {
+        when(repository.findAll()).thenReturn(Collections.emptyList());
+
+        List<BookingStatusResponse> result = service.getAllBookingStatuses();
+
+        assertTrue(result.isEmpty());
+
+        verify(repository, times(1)).findAll();
+        verify(mapper, never()).mapToResponse(any(BookingStatus.class));
     }
 }
