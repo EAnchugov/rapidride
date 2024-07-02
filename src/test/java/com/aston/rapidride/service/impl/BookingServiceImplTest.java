@@ -4,6 +4,7 @@ import com.aston.rapidride.dto.mapper.BookingMapper;
 import com.aston.rapidride.dto.request.BookingRequest;
 import com.aston.rapidride.dto.request.DateRequest;
 import com.aston.rapidride.dto.response.BookingResponse;
+import com.aston.rapidride.dto.response.BookingStatusResponse;
 import com.aston.rapidride.entity.*;
 import com.aston.rapidride.exception.NotFoundException;
 import com.aston.rapidride.repository.*;
@@ -18,11 +19,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.when;
@@ -282,6 +283,120 @@ public class BookingServiceImplTest {
         Mockito.verify(bookingRepository, Mockito.times(1)).save(booking);
     }
 
+    @Test()
+    @DisplayName("Test booking update, but car not found")
+    public void testUpdateBookingCarNotFound() {
+        Long id = 1L;
+        BookingRequest request = new BookingRequest();
+        request.setCarId(id);
+
+        Booking booking = new Booking();
+        Mockito.when(bookingRepository.findById(id)).thenReturn(Optional.of(booking));
+
+        when(carRepository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+            bookingService.updateBooking(id, request);
+        });
+
+        assertEquals("Car not found", thrown.getMessage());
+        Mockito.verify(carRepository, Mockito.times(1)).findById(id);
+        verify(bookingRepository, never()).save(any(Booking.class));
+    }
+
+    @Test()
+    @DisplayName("Test booking update, but user not found")
+    public void testUpdateBookingUserNotFound() {
+        Long id = 1L;
+        BookingRequest request = new BookingRequest();
+        request.setCarId(id);
+        request.setUserId(id);
+
+        Booking booking = new Booking();
+        Mockito.when(bookingRepository.findById(id)).thenReturn(Optional.of(booking));
+
+        Car car = new Car();
+        Mockito.when(carRepository.findById(id)).thenReturn(Optional.of(car));
+
+        when(userRepository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+            bookingService.updateBooking(id, request);
+        });
+
+        assertEquals("User not found", thrown.getMessage());
+        Mockito.verify(carRepository, Mockito.times(1)).findById(id);
+        Mockito.verify(userRepository, Mockito.times(1)).findById(id);
+        verify(bookingRepository, never()).save(any(Booking.class));
+    }
+
+    @Test()
+    @DisplayName("Test booking update, but payment not found")
+    public void testUpdateBookingPaymentNotFound() {
+        Long id = 1L;
+        BookingRequest request = new BookingRequest();
+        request.setCarId(id);
+        request.setUserId(id);
+        request.setPaymentId(id);
+
+        Booking booking = new Booking();
+        Mockito.when(bookingRepository.findById(id)).thenReturn(Optional.of(booking));
+
+        Car car = new Car();
+        Mockito.when(carRepository.findById(id)).thenReturn(Optional.of(car));
+
+        User user = new User();
+        Mockito.when(userRepository.findById(id)).thenReturn(Optional.of(user));
+
+        when(paymentRepository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+            bookingService.updateBooking(id, request);
+        });
+
+        assertEquals("Payment not found", thrown.getMessage());
+        Mockito.verify(carRepository, Mockito.times(1)).findById(id);
+        Mockito.verify(userRepository, Mockito.times(1)).findById(id);
+        Mockito.verify(paymentRepository, Mockito.times(1)).findById(id);
+        verify(bookingRepository, never()).save(any(Booking.class));
+    }
+
+    @Test()
+    @DisplayName("Test booking update, but status not found")
+    public void testUpdateBookingStatusNotFound() {
+        Long id = 1L;
+        BookingRequest request = new BookingRequest();
+        request.setCarId(id);
+        request.setUserId(id);
+        request.setPaymentId(id);
+        request.setStatusId(id);
+
+        Booking booking = new Booking();
+        Mockito.when(bookingRepository.findById(id)).thenReturn(Optional.of(booking));
+
+        Car car = new Car();
+        Mockito.when(carRepository.findById(id)).thenReturn(Optional.of(car));
+
+        User user = new User();
+        Mockito.when(userRepository.findById(id)).thenReturn(Optional.of(user));
+
+        Payment payment = new Payment();
+        Mockito.when(paymentRepository.findById(id)).thenReturn(Optional.of(payment));
+
+        when(bookingStatusRepository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+            bookingService.updateBooking(id, request);
+        });
+
+        assertEquals("Booking status not found", thrown.getMessage());
+        Mockito.verify(carRepository, Mockito.times(1)).findById(id);
+        Mockito.verify(userRepository, Mockito.times(1)).findById(id);
+        Mockito.verify(paymentRepository, Mockito.times(1)).findById(id);
+        Mockito.verify(bookingStatusRepository, Mockito.times(1)).findById(id);
+        verify(bookingRepository, never()).save(any(Booking.class));
+    }
+
     @Test
     @DisplayName("Test find all bookings")
     public void testGetAllBookings() {
@@ -304,6 +419,19 @@ public class BookingServiceImplTest {
         assertEquals(bookingResponses.size(), result.size());
 
         Mockito.verify(bookingRepository, Mockito.times(1)).findAll();
+    }
+
+    @Test
+    @DisplayName("Test find all bookings, but result list is empty")
+    public void testFindAllEmptyList() {
+        when(bookingRepository.findAll()).thenReturn(Collections.emptyList());
+
+        List<BookingResponse> result = bookingService.getAllBookings();
+
+        assertTrue(result.isEmpty());
+
+        verify(bookingRepository, times(1)).findAll();
+        verify(mapper, never()).mapToResponse(any(Booking.class));
     }
 
     @Test
@@ -336,6 +464,22 @@ public class BookingServiceImplTest {
 
         Mockito.verify(bookingStatusRepository, Mockito.times(1)).findById(id);
         Mockito.verify(bookingRepository, Mockito.times(1)).findBookingsByStatus(status);
+    }
+
+    @Test
+    @DisplayName("Test find all bookings by status id, but status id not found")
+    public void testGetBookingsByStatusIdButStatusIdNotFound() {
+        Long id = 1L;
+        Mockito.when(bookingStatusRepository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+            bookingService.getBookingsByStatusId(id);
+        });
+
+        assertEquals("Booking status not found", thrown.getMessage());
+
+        verify(bookingStatusRepository, times(1)).findById(id);
+        verify(bookingRepository, never()).findBookingsByStatus(any(BookingStatus.class));
     }
 
     @Test
@@ -372,6 +516,22 @@ public class BookingServiceImplTest {
     }
 
     @Test
+    @DisplayName("Test find all bookings by user id, but user id not found")
+    public void testGetBookingsByUserIdButUserIdNotFound() {
+        Long id = 1L;
+        Mockito.when(userRepository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+            bookingService.getBookingsByUserId(id);
+        });
+
+        assertEquals("User not found", thrown.getMessage());
+
+        verify(userRepository, times(1)).findById(id);
+        verify(bookingRepository, never()).findBookingsByUser(any(User.class));
+    }
+
+    @Test
     @DisplayName("Test find all bookings by car id")
     public void testGetBookingsByCarId() {
         Long id = 1L;
@@ -402,6 +562,22 @@ public class BookingServiceImplTest {
 
         Mockito.verify(carRepository, Mockito.times(1)).findById(id);
         Mockito.verify(bookingRepository, Mockito.times(1)).findBookingsByCar(car);
+    }
+
+    @Test
+    @DisplayName("Test find all bookings by car id, but car id not found")
+    public void testGetBookingsByCarIdButCarIdNotFound() {
+        Long id = 1L;
+        Mockito.when(carRepository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+            bookingService.getBookingsByCarId(id);
+        });
+
+        assertEquals("Car not found", thrown.getMessage());
+
+        verify(carRepository, times(1)).findById(id);
+        verify(bookingRepository, never()).findBookingsByCar(any(Car.class));
     }
 
     @Test
@@ -443,6 +619,43 @@ public class BookingServiceImplTest {
         Mockito.verify(userRepository, Mockito.times(1)).findById(id);
         Mockito.verify(carRepository, Mockito.times(1)).findById(id);
         Mockito.verify(bookingRepository, Mockito.times(1)).findBookingsByUserAndCar(user, car);
+    }
+
+    @Test
+    @DisplayName("Test find all bookings by user and car id, but user id not found")
+    public void testGetBookingsByUserIdAndCarIdButUserIdNotFound() {
+        Long id = 1L;
+        Mockito.when(userRepository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+            bookingService.getBookingsByUserIdAndCarId(id, id);
+        });
+
+        assertEquals("User not found", thrown.getMessage());
+
+        verify(userRepository, times(1)).findById(id);
+        verify(bookingRepository, never()).findBookingsByUserAndCar(any(User.class), any(Car.class));
+    }
+
+    @Test
+    @DisplayName("Test find all bookings by user and car id, but car id not found")
+    public void testGetBookingsByUserIdAndCarIdButCarIdNotFound() {
+        Long id = 1L;
+
+        User user = new User();
+        Mockito.when(userRepository.findById(id)).thenReturn(Optional.of(user));
+
+        Mockito.when(carRepository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+            bookingService.getBookingsByUserIdAndCarId(id, id);
+        });
+
+        assertEquals("Car not found", thrown.getMessage());
+
+        verify(userRepository, times(1)).findById(id);
+        verify(carRepository, times(1)).findById(id);
+        verify(bookingRepository, never()).findBookingsByUserAndCar(any(User.class), any(Car.class));
     }
 
     @Test
@@ -506,5 +719,21 @@ public class BookingServiceImplTest {
 
         Mockito.verify(paymentRepository, Mockito.times(1)).findById(id);
         Mockito.verify(bookingRepository, Mockito.times(1)).findBookingByPayment(payment);
+    }
+
+    @Test
+    @DisplayName("Test find all bookings by payment id, but payment id not found")
+    public void testGetBookingsByPaymentIdButPaymentIdNotFound() {
+        Long id = 1L;
+        Mockito.when(paymentRepository.findById(id)).thenReturn(Optional.empty());
+
+        NotFoundException thrown = assertThrows(NotFoundException.class, ()-> {
+            bookingService.getBookingByPaymentId(id);
+        });
+
+        assertEquals("Payment not found", thrown.getMessage());
+
+        verify(paymentRepository, times(1)).findById(id);
+        verify(bookingRepository, never()).findBookingByPayment(any(Payment.class));
     }
 }
