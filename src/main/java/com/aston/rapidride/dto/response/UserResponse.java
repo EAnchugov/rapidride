@@ -17,4 +17,14 @@ public class UserResponse {
     private String password;
     private String phoneNumber;
     private LocalDateTime createdDate;
+
+    public UserResponse(Long id, String firstName, String lastName, String email, String password, String phoneNumber, LocalDateTime createdDate) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.createdDate = createdDate;
+    }
 }
