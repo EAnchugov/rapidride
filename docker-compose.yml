@@ -1,43 +1,46 @@
-version: '3'
-
-volumes:
-  zookeeper-data:
-    driver: local
-  kafka-data:
-    driver: local
-
-
-
+version: '3.8'
 services:
-  zookeeper:
-    image: 'confluentinc/cp-zookeeper:latest'
+  rapid-ride:
+    build: ../rapidride
+    image: rr_image
+    container_name: rr_container
     ports:
-      - "2181:2181"
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-
-  kafka:
-    image: 'confluentinc/cp-kafka:latest'
-    environment:
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    ports:
-      - "9092:9092"
+      - "9090:9090"
     depends_on:
-      - zookeeper
+      - rapid-ride-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://rapid-ride-db:5432/rapid-ride
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123
+      - POSTGRES_DB=rapid-ride
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123
+
+  rapid-ride-db:
+    image: postgres:latest
+    container_name: rapid-ride-db
+    ports:
+      - "6541:5432"
+    environment:
+      - POSTGRES_DB=rapid-ride
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123
 
   minio:
-    image: minio/minio:latest
+    image: docker.io/bitnami/minio:2024
     container_name: minio
     ports:
-      - '9090:9090'
       - '9000:9000'
-    command: server /data
+      - '9001:9001'
+    volumes:
+      - 'minio_data:/bitnami/minio/data'
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
 
+volumes:
+  kafka_data:
+    driver: local
 
+  minio_data:
+    driver: local
