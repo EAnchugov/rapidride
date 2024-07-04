@@ -19,6 +19,10 @@ public class MinioService {
     private String bucketName;
     @Value("${rapidride.minio.url}")
     private String minio;
+    @Value("${minio.username}")
+    private String minioUsername;
+    @Value("${minio.password}")
+    private String minioPassword;
 
     //TODO Сделать превязку Car, ФОтографии и пути до этой фотографии.
     public void addFile(String objectName, String filePath) {
@@ -26,17 +30,12 @@ public class MinioService {
         //Проверяем на уникальность имени
         //Если уникально - создаем
         //если нет - генерируем рандомное имя
-
         //Если создали - атдейтим саr уникальным именем файла
         try {
             MinioClient minioClient = MinioClient.builder()
                     .endpoint(minio)
                     .credentials("minioadmin", "minioadmin")
                     .build();
-            //TODO сделать передачу путей и имени файла
-//            String objectName = "minio.png";  // Имя объекта в MinIO
-//            String filePath = "D:\\minio.png";  // Путь к вашему файлу
-
             // Создайте бакет, если он не существует
             boolean isExist = minioClient.bucketExists(
                     BucketExistsArgs.builder().bucket(bucketName).build()
