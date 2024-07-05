@@ -18,7 +18,7 @@ cd rapid-ride
 Запустите Docker Compose:
 
 sh
-docker-compose up -dЪ
+docker-compose up -d
 
 
 Откройте браузер и перейдите по адресу:
