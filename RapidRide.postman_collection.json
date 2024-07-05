@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "8fda4619-d563-4e50-a412-8c42d93c4f52",
+		"name": "RapidRide",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "35034582"
+	},
+	"item": [
+		{
+			"name": "http://localhost:9090/ping",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTgyNDU2LCJleHAiOjE3MjAxODMwNTZ9.K4uoWZpqDvrAqBkB_gbp8h49DVi_tUGTPMetQCeGAA8"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9090/ping"
+			},
+			"response": []
+		},
+		{
+			"name": "getStatuses",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg0ODQ2LCJleHAiOjE3MjAxODU0NDZ9.5Gwwzf174j4vm6LpNwrJjDKiZxpOe4prXxcDw73CxQY"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/booking-statuses"
+			},
+			"response": []
+		},
+		{
+			"name": "create engine-types",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg3NzE1LCJleHAiOjE3MjAxODgzMTV9.DWtmkogdc9mFOxDfVbdWoih3Kix0PPMV1f4q64l1ovI"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" :\"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/engine-types"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateModel",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg3NzE1LCJleHAiOjE3MjAxODgzMTV9.DWtmkogdc9mFOxDfVbdWoih3Kix0PPMV1f4q64l1ovI"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"asdasd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/models"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateColor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg3NzE1LCJleHAiOjE3MjAxODgzMTV9.DWtmkogdc9mFOxDfVbdWoih3Kix0PPMV1f4q64l1ovI"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"white\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/colors"
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": null,\r\n    \"firstName\": \"firstName\",\r\n    \"lastName\": \"lastName\",\r\n    \"phone\": \"phone\",\r\n    \"email\": \"email\",\r\n    \"password\": \"password\",\r\n    \"address\": null,\r\n    \"isActive\": true,\r\n    \"userFavorites\": null,\r\n    \"roles\": null,\r\n    \"userDocuments\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/users/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg3NzE1LCJleHAiOjE3MjAxODgzMTV9.DWtmkogdc9mFOxDfVbdWoih3Kix0PPMV1f4q64l1ovI"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/car-statuses"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateBrand",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg3NzE1LCJleHAiOjE3MjAxODgzMTV9.DWtmkogdc9mFOxDfVbdWoih3Kix0PPMV1f4q64l1ovI"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"asd\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/brands"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateCar",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg3NzE1LCJleHAiOjE3MjAxODgzMTV9.DWtmkogdc9mFOxDfVbdWoih3Kix0PPMV1f4q64l1ovI"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"vin\":\"vin\",\r\n    \"power\":156,\r\n    \"year\": 1999,\r\n    \"registrationNumber\": \"registrationNumber\",\r\n    \"price\":1999,\r\n    \"brandId\":1,\r\n    \"modelId\":1,\r\n    \"colorId\":1,\r\n    \"statusId\": 1,\r\n    \"engineTypeId\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/cars"
+			},
+			"response": []
+		},
+		{
+			"name": "CreateUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"firstName\",\r\n    \"lastName\": \"lastName\",\r\n    \"email\":\"email@email.com\",\r\n    \"password\":\"zxcv\",\r\n    \"repeatPassword\":\"zxcv\",\r\n    \"phone\": \"phone\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/users/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Booking",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTkxMDg3LCJleHAiOjE3MjAxOTE2ODd9.Jl-SfHrwyyMt_fuqiWh8_x_prJG_lYqyuFUIY3vND_U"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"carId\": \"1\",\r\n    \"userId\": \"1\",\r\n    \"startDate\": \"2024-04-23T18:25:43.511Z\",\r\n    \"endDate\": \"2025-04-23T18:25:43.511Z\",\r\n    \"statusId\": \"1\",\r\n    \"paymentId\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/bookings"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg3NzE1LCJleHAiOjE3MjAxODgzMTV9.DWtmkogdc9mFOxDfVbdWoih3Kix0PPMV1f4q64l1ovI"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9090/api/v1/users/1"
+			},
+			"response": []
+		},
+		{
+			"name": "getUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTkwMjcwLCJleHAiOjE3MjAxOTA4NzB9.sE_NjpIMpt_SwJqKK-sNFHoVqCL6i1Bqn-kWiCykgXM"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9090/api/v1/users"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/files/names/minio.png",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTgzNzA4LCJleHAiOjE3MjAxODQzMDh9.9nCf0C3Stp5d0ylpBx3t2v-b2sj1xZLz1Vow2YYxUIw"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/files/names/minio.png"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllCars",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg4MzQ3LCJleHAiOjE3MjAxODg5NDd9.nq3KV7DLAE-RSUXoqKvA8HQPwFN2QDMAj3_BskKFUhA"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9090/api/v1/cars"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Bookings",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTkxMDg3LCJleHAiOjE3MjAxOTE2ODd9.Jl-SfHrwyyMt_fuqiWh8_x_prJG_lYqyuFUIY3vND_U"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9090/api/v1/bookings"
+			},
+			"response": []
+		},
+		{
+			"name": "Get car 1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTgyNDU2LCJleHAiOjE3MjAxODMwNTZ9.K4uoWZpqDvrAqBkB_gbp8h49DVi_tUGTPMetQCeGAA8"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/cars/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTkxMDg3LCJleHAiOjE3MjAxOTE2ODd9.Jl-SfHrwyyMt_fuqiWh8_x_prJG_lYqyuFUIY3vND_U"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"забронировано\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/booking-statuses"
+			},
+			"response": []
+		},
+		{
+			"name": "Get курс валют",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg0MTk2LCJleHAiOjE3MjAxODQ3OTZ9.r-4OadnxzpHm1mEVUGzezuML3mKMxSYhmf4nohbitEs"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9090/api/v1/currencies"
+			},
+			"response": []
+		},
+		{
+			"name": "Get models",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg0MTk2LCJleHAiOjE3MjAxODQ3OTZ9.r-4OadnxzpHm1mEVUGzezuML3mKMxSYhmf4nohbitEs"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9090/api/v1/models"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg0ODQ2LCJleHAiOjE3MjAxODU0NDZ9.5Gwwzf174j4vm6LpNwrJjDKiZxpOe4prXxcDw73CxQY"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9090/api/v1/booking-statuses"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Card",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg3NzE1LCJleHAiOjE3MjAxODgzMTV9.DWtmkogdc9mFOxDfVbdWoih3Kix0PPMV1f4q64l1ovI"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"number\": \"92475534574085786\",\r\n    \"owner\": \"user one two\",\r\n    \"expireDate\": \"2024-04-23T18:25:43.511Z\",\r\n    \"user\": {\r\n        \"id\": 1,\r\n        \"firstName\": null,\r\n        \"lastName\": null,\r\n        \"email\": \"new_email@gmail.com\",\r\n        \"password\": \"$2a$10$NEuuVQkqOg7OZbUY2FDuP.Z1lPBT/t1glQqrZJznkRSn3MI5.Aqtm\",\r\n        \"phoneNumber\": null,\r\n        \"createdDate\": \"2024-07-05T00:00:00\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9090/api/v1/cards"
+			},
+			"response": []
+		},
+		{
+			"name": "Get cards",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJuZXdfZW1haWxAZ21haWwuY29tIiwiaWF0IjoxNzIwMTg3NzE1LCJleHAiOjE3MjAxODgzMTV9.DWtmkogdc9mFOxDfVbdWoih3Kix0PPMV1f4q64l1ovI"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9090/api/v1/cards"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
