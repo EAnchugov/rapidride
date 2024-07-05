@@ -20,28 +20,25 @@ public class BookingStatusController {
     private final BookingStatusService bookingStatusService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<BookingStatusResponse> findById(@PathVariable Long id) {
         BookingStatusResponse bookingStatus = bookingStatusService.getById(id);
         return new ResponseEntity<>(bookingStatus, HttpStatus.OK);
     }
 
     @PostMapping()
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<String> create(@Valid @RequestBody BookingStatusRequest request) {
         bookingStatusService.createBookingStatus(request);
         return new ResponseEntity<>("Successfully", HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<BookingStatusResponse> update(@PathVariable Long id,
                                                         @Valid @RequestBody BookingStatusRequest request) {
         return new ResponseEntity<>(bookingStatusService.updateBookingStatus(id, request), HttpStatus.OK);
     }
 
     @GetMapping()
-    @PreAuthorize("hasAuthority('ADMIN')")
+ //   @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<BookingStatusResponse>> findAll() {
         List<BookingStatusResponse> bookingStatuses = bookingStatusService.getAllBookingStatuses();
         return new ResponseEntity<>(bookingStatuses, HttpStatus.OK);

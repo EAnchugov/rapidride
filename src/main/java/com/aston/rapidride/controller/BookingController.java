@@ -21,55 +21,48 @@ public class BookingController {
     private final BookingService bookingService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ResponseEntity<BookingResponse> findById(@PathVariable Long id) {
         BookingResponse booking = bookingService.getById(id);
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 
     @PostMapping()
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ResponseEntity<String> create(@Valid @RequestBody BookingRequest request) {
         bookingService.createBooking(request);
         return new ResponseEntity<>("Successfully", HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ResponseEntity<BookingResponse> update(@PathVariable Long id, @Valid @RequestBody BookingRequest request) {
         return new ResponseEntity<>(bookingService.updateBooking(id, request), HttpStatus.OK);
     }
 
     @GetMapping()
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<BookingResponse>> findAll() {
         List<BookingResponse> bookings = bookingService.getAllBookings();
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/statuses/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<BookingResponse>> findAllByStatusId(@PathVariable Long id) {
         List<BookingResponse> bookings = bookingService.getBookingsByStatusId(id);
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+  //  @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ResponseEntity<List<BookingResponse>> findAllByUserId(@PathVariable Long id) {
         List<BookingResponse> bookings = bookingService.getBookingsByUserId(id);
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/cars/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<BookingResponse>> findAllByCarId(@PathVariable Long id) {
         List<BookingResponse> bookings = bookingService.getBookingsByCarId(id);
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/users/{userId}/cars/{carId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<BookingResponse>> findAllByUserAndCarId(@PathVariable Long userId,
                                                                        @PathVariable Long carId) {
         List<BookingResponse> bookings = bookingService.getBookingsByUserIdAndCarId(userId, carId);
@@ -77,14 +70,12 @@ public class BookingController {
     }
 
     @GetMapping("/dates")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ResponseEntity<List<BookingResponse>> findAllByDates(@Valid @RequestBody DateRequest request) {
         List<BookingResponse> bookings = bookingService.getBookingsByDates(request);
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/payments/{id}")
-    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<BookingResponse> findAllByPaymentId(@PathVariable Long id) {
         BookingResponse booking = bookingService.getBookingByPaymentId(id);
         return new ResponseEntity<>(booking, HttpStatus.OK);
