@@ -7,6 +7,7 @@ import com.aston.rapidride.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,9 +23,6 @@ public class BookingController {
     @GetMapping("/{id}")
     public ResponseEntity<BookingResponse> findById(@PathVariable Long id) {
         BookingResponse booking = bookingService.getById(id);
-        if (booking == null) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 
@@ -42,36 +40,25 @@ public class BookingController {
     @GetMapping()
     public ResponseEntity<List<BookingResponse>> findAll() {
         List<BookingResponse> bookings = bookingService.getAllBookings();
-        if (bookings.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/statuses/{id}")
     public ResponseEntity<List<BookingResponse>> findAllByStatusId(@PathVariable Long id) {
         List<BookingResponse> bookings = bookingService.getBookingsByStatusId(id);
-        if (bookings.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
+  //  @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ResponseEntity<List<BookingResponse>> findAllByUserId(@PathVariable Long id) {
         List<BookingResponse> bookings = bookingService.getBookingsByUserId(id);
-        if (bookings.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/cars/{id}")
     public ResponseEntity<List<BookingResponse>> findAllByCarId(@PathVariable Long id) {
         List<BookingResponse> bookings = bookingService.getBookingsByCarId(id);
-        if (bookings.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
@@ -79,27 +66,18 @@ public class BookingController {
     public ResponseEntity<List<BookingResponse>> findAllByUserAndCarId(@PathVariable Long userId,
                                                                        @PathVariable Long carId) {
         List<BookingResponse> bookings = bookingService.getBookingsByUserIdAndCarId(userId, carId);
-        if (bookings.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/dates")
     public ResponseEntity<List<BookingResponse>> findAllByDates(@Valid @RequestBody DateRequest request) {
         List<BookingResponse> bookings = bookingService.getBookingsByDates(request);
-        if (bookings.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
     @GetMapping("/payments/{id}")
     public ResponseEntity<BookingResponse> findAllByPaymentId(@PathVariable Long id) {
         BookingResponse booking = bookingService.getBookingByPaymentId(id);
-        if (booking == null) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 }

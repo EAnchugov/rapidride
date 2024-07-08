@@ -33,14 +33,15 @@ public class CarMapper {
         if (carRequest == null) {
             return null;
         }
-
-        return Car.builder()
-                .vin(carRequest.getVin())
-                .power(carRequest.getPower())
-                .year(carRequest.getYear())
-                .registrationNumber(carRequest.getRegistrationNumber())
-                .price(carRequest.getPrice())
-                .photo(carRequest.getPhoto())
-                .build();
+        Car car = new Car();
+        car.setVin(carRequest.getVin());
+        car.setPower(carRequest.getPower());
+        car.setYear(carRequest.getYear());
+        car.setRegistrationNumber(carRequest.getRegistrationNumber());
+        car.setPrice(carRequest.getPrice());
+        car.setPhoto(carRequest.getPhoto());
+        return car;
     }
+
+
 }

@@ -6,6 +6,7 @@ import com.aston.rapidride.service.BookingStatusService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,9 +22,6 @@ public class BookingStatusController {
     @GetMapping("/{id}")
     public ResponseEntity<BookingStatusResponse> findById(@PathVariable Long id) {
         BookingStatusResponse bookingStatus = bookingStatusService.getById(id);
-        if (bookingStatus == null) {
-            return ResponseEntity.notFound().build();
-        }
         return new ResponseEntity<>(bookingStatus, HttpStatus.OK);
     }
 
@@ -40,11 +38,9 @@ public class BookingStatusController {
     }
 
     @GetMapping()
+ //   @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<BookingStatusResponse>> findAll() {
         List<BookingStatusResponse> bookingStatuses = bookingStatusService.getAllBookingStatuses();
-        if (bookingStatuses == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return new ResponseEntity<>(bookingStatuses, HttpStatus.FOUND);
+        return new ResponseEntity<>(bookingStatuses, HttpStatus.OK);
     }
 }

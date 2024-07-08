@@ -37,16 +37,20 @@ public class CarServiceImpl implements CarService {
     public void create(CarRequest carRequest) {
         Car car = carMapper.mapToEntity(carRequest);
 
-        Brand brand = brandRepository.findById(carRequest.getBrandId()).orElseThrow(() -> new NotFoundException(BRAND_NOT_FOUND.get()));
+        Brand brand = brandRepository.findById(carRequest.getBrandId())
+                .orElseThrow(() -> new NotFoundException(BRAND_NOT_FOUND.get()));
         car.setBrand(brand);
 
-        Color color = colorRepository.findById(carRequest.getColorId()).orElseThrow(() -> new NotFoundException(COLOR_NOT_FOUND.get()));
+        Color color = colorRepository.findById(carRequest.getColorId())
+                .orElseThrow(() -> new NotFoundException(COLOR_NOT_FOUND.get()));
         car.setColor(color);
 
-        Model model = modelRepository.findById(carRequest.getModelId()).orElseThrow(() -> new NotFoundException(MODEL_NOT_FOUND.get()));
+        Model model = modelRepository.findById(carRequest.getModelId())
+                .orElseThrow(() -> new NotFoundException(MODEL_NOT_FOUND.get()));
         car.setModel(model);
 
-        EngineType engineType = engineTypeRepository.findById(carRequest.getEngineTypeId()).orElseThrow(() -> new NotFoundException(ENGINE_TYPE_NOT_FOUND.get()));
+        EngineType engineType = engineTypeRepository.findById(carRequest.getEngineTypeId())
+                .orElseThrow(() -> new NotFoundException(ENGINE_TYPE_NOT_FOUND.get()));
         car.setEngineType(engineType);
 
         CarStatus carStatus = carStatusRepository.findById(carRequest.getStatusId())
@@ -102,6 +106,9 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void deleteById(Long id) {
+        if (!carRepository.existsById(id)) {
+            throw new NotFoundException(CAR_NOT_FOUND.get());
+        }
         carRepository.deleteById(id);
     }
 

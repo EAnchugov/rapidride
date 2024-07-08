@@ -62,6 +62,4 @@ public class PaymentController {
     public ResponseEntity<List<PaymentResponse>> getPaymentGetter(@RequestParam CardRequest cardRequest) {
         return new ResponseEntity<>(paymentService.getAllPaymentByFromGetterCard(cardRequest), HttpStatus.OK);
     }
-
-
 }

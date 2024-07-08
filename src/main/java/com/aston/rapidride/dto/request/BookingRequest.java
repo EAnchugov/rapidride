@@ -22,7 +22,6 @@ public class BookingRequest {
     @NotBlank
     private LocalDate endDate;
 
-    @NotBlank
     private Long paymentId;
 
     @NotBlank

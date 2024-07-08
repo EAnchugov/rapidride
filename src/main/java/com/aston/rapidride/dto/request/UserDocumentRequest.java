@@ -10,14 +10,11 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class UserDocumentRequest {
 
-
     @NotBlank(message = "user_id can't be empty")
     Long userID;
 
-
     @NotBlank(message = "first_name can't be empty")
     private String firstName;
-
 
     @NotBlank(message = "last_name can't be empty")
     private String lastName;

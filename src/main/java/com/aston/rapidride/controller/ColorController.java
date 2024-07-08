@@ -20,7 +20,6 @@ public class ColorController {
     private final ColorService service;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('USER')")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> getById(@PathVariable Long id) {
         try {
