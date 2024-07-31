@@ -1,5 +1,6 @@
 package com.aston.rapidride.dto.request;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
+@Builder
 public class UserRequest {
 
     @NotBlank(message = "First Name должен быть заполнен")
@@ -28,4 +30,13 @@ public class UserRequest {
 
     @NotBlank(message = "Phone number должен быть заполнен")
     private String phone;
+
+    public UserRequest(String firstName, String lastName, String email, String password, String repeatPassword, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.repeatPassword = repeatPassword;
+        this.phone = phone;
+    }
 }
